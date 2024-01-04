@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from src.evaluate_model import evaluate_model
 from src.preprocess import preprocess_data
 from src.train import train_model
+from src.feature_selection import perform_rfe
 from src.visualize import plot_confusion_matrix, plot_feature_importances, plot_roc_curve, plot_survival_probability_histogram
 
 
@@ -28,6 +29,10 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 # Train and evaluate model
 model = train_model(X_train, y_train)
 predictions = evaluate_model(model, X_val, y_val)
+
+# Perform feature selection
+# rfe, feature_ranking = perform_rfe(X_train, y_train, n_features_to_select=10)
+# print("Feature Ranking:", feature_ranking)
 
 # Plot visualizations
 plot_feature_importances(model, X_train)
