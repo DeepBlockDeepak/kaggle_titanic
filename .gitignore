@@ -1,0 +1,23 @@
+# Compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Python-venv
+venv/
+*.venv
+env/
+
+# Poetry
+poetry.lock
+
+# PyCharm
+.idea/
+*.iml
+
+# VSCode
+.vscode/
