@@ -4,10 +4,11 @@
 This project is an approach to the [Kaggle Titanic competition](https://www.kaggle.com/c/titanic), aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training with a RandomForestClassifier, and predicting survival outcomes.
 
 ## Data Description
-The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle competitions download -c titanic`. It includes:
-- `train.csv`: The training dataset with passenger details and survival labels.
-- `test.csv`: The test dataset for making survival predictions.
+The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle competitions download -c titanic`. From Kaggle:
+> - `train.csv` contains the details of a subset of the passengers on board (891 to be exact) and importantly, will reveal whether they survived or not, also known as the "ground truth".
+> - The `test.csv` dataset contains similar information but does not disclose the "ground truth" for each passenger. It's your job to predict these outcomes.
 - `gender_submission.csv`: The expected submission format.
+
 
 ## Model Details
 The model is a RandomForestClassifier from scikit-learn, trained with 100 trees and a maximum depth of 10 (`RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)`). The model is trained in `src/train.py` and persisted to `models/titanic_model.pkl`.
@@ -67,7 +68,7 @@ The `outputs/` directory contains visualizations generated for model interpretat
 ## Setup and Prerequisites
 To set up the project:
 1. Clone the repository.
-2. Install dependencies specified in `pyproject.toml` and `poetry.lock` using Poetry.
+2. Install dependencies specified in `pyproject.toml` using Poetry.
 3. Run `poetry run python main.py` for training and predictions on the test set or `poetry run python user_passenger.py` for custom predictions.
 
 ### Important Notes on Model Usage
