@@ -1,22 +1,22 @@
 # Titanic Survival Prediction Project
 
 ## Overview
-This project is an approach to the Kaggle Titanic competition, aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training with a RandomForestClassifier, and predicting survival outcomes.
+This project is an approach to the [Kaggle Titanic competition](https://www.kaggle.com/c/titanic), aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training with a RandomForestClassifier, and predicting survival outcomes.
 
 ## Data Description
 The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle competitions download -c titanic`. It includes:
 - `train.csv`: The training dataset with passenger details and survival labels.
 - `test.csv`: The test dataset for making survival predictions.
-- `gender_submission.csv`: An example of the expected submission format.
+- `gender_submission.csv`: The expected submission format.
 
 ## Model Details
 The model is a RandomForestClassifier from scikit-learn, trained with 100 trees and a maximum depth of 10 (`RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)`). The model is trained in `src/train.py` and persisted to `models/titanic_model.pkl`.
 
 ## Model Performance
-The RandomForestClassifier model achieves a notable accuracy of **0.85**. This high level of accuracy indicates the model's effectiveness in predicting passenger survival on the Titanic.
+The RandomForestClassifier model achieves an accuracy of **0.85**.
 
 ### Visual Insights
-The following images, generated during model evaluation, provide deeper insights into its performance:
+The following images were generated during the most recent model evaluation:
 
 - ![Feature Importances](outputs/feature_importances.png)
     *Feature Importances:* This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/features.py**'s `extract_title()`.
@@ -79,7 +79,7 @@ To set up the project:
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
 
 ## Additional Notes
-This project is an initial implementation of the Titanic survival prediction and may undergo further enhancements.
+This project is an initial implementation of the Titanic survival prediction. Ideally, this model will someday achieve a perfect accuracy score!
 
 ---
 
