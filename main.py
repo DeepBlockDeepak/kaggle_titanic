@@ -5,7 +5,7 @@ from src.preprocess import preprocess_data
 from src.train import train_model
 from src.feature_selection import perform_rfe
 from src.visualize import plot_confusion_matrix, plot_feature_importances, plot_roc_curve, plot_survival_probability_histogram
-
+from src.svm_train import svm_main
 
 # Load data
 train_data = pd.read_csv('data/train.csv')
@@ -26,9 +26,12 @@ X_train, X_test = preprocess_data(train_data, test_data)
 y_train = train_data["Survived"]
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=0)
 
-# Train and evaluate model
+# Train and evaluate the RandomForestClassifier model
 model = train_model(X_train, y_train)
 predictions = evaluate_model(model, X_val, y_val)
+
+# Train and evaluate SVM model
+svm_predictions = svm_main(X_train, y_train)
 
 # Perform feature selection
 # rfe, feature_ranking = perform_rfe(X_train, y_train, n_features_to_select=10)
