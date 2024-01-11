@@ -1,7 +1,7 @@
 from sklearn.svm import SVC
 import joblib
 from src.evaluate_model import evaluate_model
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 
 def train_svm_model(X_train, y_train):
     
