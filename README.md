@@ -47,6 +47,15 @@ The following images were generated during the most recent model evaluation:
 
     - This histogram shows the distribution of the predicted probabilities for survival by the model.
 
+## Testing
+
+### Automated Tests
+`tests/` directory contains automated tests.
+
+To run the tests, navigate to the project root and execute the following command:
+```sh
+python -m unittest discover -s tests
+```
 
 ## Scripts and Functionality
 - `main.py`: Orchestrates the data loading, preprocessing, model training, evaluation, and prediction generation. It uses various modules from the `src/` directory for different steps in the workflow.

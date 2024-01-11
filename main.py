@@ -31,7 +31,7 @@ model = train_model(X_train, y_train)
 predictions = evaluate_model(model, X_val, y_val)
 
 # Train and evaluate SVM model
-svm_predictions = svm_main(X_train, y_train)
+# svm_predictions = svm_main(X_train, y_train)
 
 # Perform feature selection
 # rfe, feature_ranking = perform_rfe(X_train, y_train, n_features_to_select=10)
