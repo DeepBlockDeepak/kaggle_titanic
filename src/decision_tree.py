@@ -74,3 +74,17 @@ def classify(datapoint, tree):
     for branch in tree.branches:
         if branch.value == value:
             return classify(datapoint, branch)
+
+    # If no matching branch is found, return the most common label
+    # Aggregate labels from all leaves
+    all_leaf_labels = []
+    def collect_leaf_labels(node):
+        if isinstance(node, Leaf):
+            all_leaf_labels.extend(node.labels.elements())
+        else:
+            for branch in node.branches:
+                collect_leaf_labels(branch)
+
+    collect_leaf_labels(tree)
+    # Return the most common label
+    return Counter(all_leaf_labels).most_common(1)[0][0]
