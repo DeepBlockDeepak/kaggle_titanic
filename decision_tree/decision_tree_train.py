@@ -1,16 +1,15 @@
-import sys
-sys.path.append('/Users/jmeds/code/kaggle_titanic')
+# commenting out until I have resolved path import design & issue here
+# Current output is: "Decision Tree Classification Accuracy: 0.72"
+# import sys
+# sys.path.append('/path/to/kaggle_titanic/root')
 
 from src.preprocess import preprocess_data
-from src.decision_tree import build_tree, classify 
+from decision_tree import build_tree, classify 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import pandas as pd
 import numpy as np
 
-def custom_accuracy_score(true_labels, predictions):
-    correct = sum(1 for true, pred in zip(true_labels, predictions) if true == pred)
-    return correct / len(true_labels)
 
 def debug_accuracy_score(y_val_list, predictions):
     # Check lengths
@@ -60,7 +59,7 @@ def decision_tree_main():
 
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=0)
 
-    # Convert DataFrame to list of lists for decision tree compatibility
+    # Convert DataFrame to list of lists for the decision tree compatibility
     X_train_list = X_train.values.tolist()
     X_val_list = X_val.values.tolist()
     y_train_list = y_train.tolist()
@@ -69,11 +68,9 @@ def decision_tree_main():
     # Build and train decision tree
     tree = build_tree(X_train_list, y_train_list)
 
-    # Score the Decision Tree
-    predictions = [classify(test_data, tree) for test_data in X_val_list]
-
-    print(f"Decision Tree Classification with Custom Accuracy Score: {custom_accuracy_score(y_val_list, predictions):.2f}")
-    print(f"Decision Tree Classification with sklearn.accuracy_score: {accuracy_score(y_val_list, predictions):.2f}")
+    # Score the Decision Tree with predictions on the validation set
+    predictions = [classify(val_data, tree) for val_data in X_val_list]
+    print(f"Decision Tree Classification Accuracy: {accuracy_score(y_val_list, predictions):.2f}")
 
     # debug_accuracy_score(y_val_list, predictions)
 

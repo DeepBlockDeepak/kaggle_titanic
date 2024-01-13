@@ -64,13 +64,11 @@ def build_tree(data, labels, value = ""):
           
 def classify(datapoint, tree):
     
-    # might need to use Counter instead!!!!!
     if isinstance(tree, Leaf):
         return max(tree.labels.items(), key=lambda item: item[1])[0]
 
-    # else the tree is a Internal_Node 
+    # else the tree is an Internal_Node 
     value = datapoint[tree.feature]
-
     for branch in tree.branches:
         if branch.value == value:
             return classify(datapoint, branch)
