@@ -13,9 +13,7 @@ def train_svm_model(X_train, y_train):
     
     return svm_model
 
-def svm_main(X, y):
-    # Splitting the data
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=0)
+def svm_main(X_train, X_val, y_train, y_val):
 
     # Train the SVM model
     svm_model = train_svm_model(X_train, y_train)
@@ -23,4 +21,4 @@ def svm_main(X, y):
     # Evaluate the model
     svm_predictions = evaluate_model(svm_model, X_val, y_val)
 
-    return svm_predictions
+    return svm_model, svm_predictions
