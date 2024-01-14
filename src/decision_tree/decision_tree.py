@@ -5,11 +5,32 @@ class Leaf:
         self.labels = Counter(labels)
         self.value = value
 
+    def predict(self, _):
+        return max(self.labels, key=self.labels.get)
+
+
 class Internal_Node:
-    def __init__(self,feature,branches,value):
+    def __init__(self, feature, branches, value):
         self.feature = feature
         self.branches = branches
         self.value = value
+
+    def predict(self, datapoint):
+        value = datapoint[self.feature]
+        for branch in self.branches:
+            if branch.value == value:
+                return branch.predict(datapoint)
+        # Fallback: if no matching branch is found
+        all_leaf_labels = []
+        def collect_leaf_labels(node):
+            if isinstance(node, Leaf):
+                all_leaf_labels.extend(node.labels.elements())
+            else:
+                for branch in node.branches:
+                    collect_leaf_labels(branch)
+        
+        collect_leaf_labels(self)
+        return Counter(all_leaf_labels).most_common(1)[0][0]
 
 def split(dataset, labels, column):
     data_subsets = []
