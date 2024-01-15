@@ -13,12 +13,12 @@ The model is a [RandomForestClassifier from scikit-learn](https://scikit-learn.o
 - **SVM (Support Vector Machine)**: The project incorporates a Support Vector Machine model using the [SVC class from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC). The SVM model is configured with an RBF kernel (`kernel='rbf'`), a scale gamma value (`gamma='scale'`), and a regularization parameter C set to 1 (`C=1`). This model is particularly effective for high-dimensional spaces and is implemented in `src/svm/svm_train.py`. It is trained and evaluated in a similar fashion to the RandomForestClassifier. (`Accuracy: 0.73`)
 
 
-
 ## Model Performance
 The project features three distinct models: RandomForestClassifier, SVM, and a hand-rolled Decision Tree Classifier. Each model has been evaluated for its accuracy:
 - The RandomForestClassifier Accuracy : **0.85**
 - Decision Tree Classifier Accuracy : **0.72**
 - SVM Accuracy : **0.73**
+
 
 ## Visual Insights
 
@@ -75,6 +75,8 @@ The project is structured to provide a comprehensive approach to the Titanic sur
 > poetry run python main.py --model svm
 > poetry run python main.py # defaults to random_forest
 ```
+
+- `rf_hyperparameter_tuning.py`: This script utilizes [GridSearchCV from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to exhaustively search through a predefined grid of hyperparameters and find the combination that yields the best performance. The script processes the training data, splits it for validation, and applies a grid search on the RandomForestClassifier. Interestingly, this script doesn't not produce a more accurate model than that provided with default values inside of [Random Forest Main Script](src/random_forest/rf_main.py)
 
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
 
