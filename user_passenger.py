@@ -67,7 +67,7 @@ def main():
     preprocessed_input = preprocess_user_input(user_input)
 
     # Load the trained model
-    model = joblib.load('models/titanic_model.pkl')
+    model = joblib.load('models/rf_titanic_model.pkl')
 
     # Make a prediction
     prediction_probabilities = model.predict_proba(preprocessed_input)
