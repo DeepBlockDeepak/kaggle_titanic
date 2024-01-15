@@ -1,9 +1,3 @@
-# commenting out until I have resolved path import design & issue here
-# Current output is: "Decision Tree Classification Accuracy: 0.72"
-# import sys
-# sys.path.append('/path/to/kaggle_titanic/root')
-
-from src.preprocess import preprocess_data
 from src.decision_tree.decision_tree import build_tree, classify 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
