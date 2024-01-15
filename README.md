@@ -87,6 +87,29 @@ To set up the project:
 2. Install dependencies specified in `pyproject.toml` using Poetry.
 3. Run `poetry run python main.py` for training and predictions on the test set or `poetry run python user_passenger.py` for custom predictions.
 
+## Code Formatting and Linting
+
+### Installing Code Formatters and Linters
+This project uses `isort`, `black`, and `ruff` to maintain code quality and consistency. To install these tools, run the following command:
+
+```bash
+poetry add --dev isort black ruff
+```
+
+Before committing your code, please run the following commands to ensure consistency in code style and quality:
+
+```bash
+# Format and lint code
+echo "Running isort for import sorting..."
+poetry run isort .
+
+echo "Running black for code formatting..."
+poetry run black .
+
+echo "Running ruff for linting..."
+poetry run ruff .
+```
+
 
 ## Testing
 

@@ -1,6 +1,6 @@
 # src/feature_selection.py
-from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import RFE
 
 
 def perform_rfe(X_train, y_train, n_features_to_select=10):

@@ -1,8 +1,8 @@
-from src.decision_tree.decision_tree import build_tree, classify 
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-import pandas as pd
 import numpy as np
+from sklearn.metrics import accuracy_score
+
+from src.decision_tree.decision_tree import build_tree
+
 
 def custom_accuracy_score(true_labels, predictions):
     correct = sum(1 for true, pred in zip(true_labels, predictions) if true == pred)
@@ -49,7 +49,6 @@ def debug_accuracy_score(y_val_list, predictions):
 
 
 def decision_tree_main(X_train, y_train, X_val, y_val):
-
     # Convert DataFrame to list of lists for the decision tree compatibility
     X_train_list = X_train.values.tolist()
     X_val_list = X_val.values.tolist()
@@ -62,6 +61,8 @@ def decision_tree_main(X_train, y_train, X_val, y_val):
     # Score the Decision Tree with predictions on the validation set
     predictions = [tree.predict(val_data) for val_data in X_val_list]
     # debug_accuracy_score(y_val_list, predictions)
-    print(f"Model: 'Decision Tree', Accuracy: {accuracy_score(y_val_list, predictions):.2f}")
+    print(
+        f"Model: 'Decision Tree', Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
+    )
 
     return tree, predictions
