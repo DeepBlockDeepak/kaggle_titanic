@@ -1,23 +1,33 @@
 import argparse
+
 import pandas as pd
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+
+from src.decision_tree.decision_tree_train import decision_tree_main
 from src.preprocess import preprocess_data
 from src.random_forest.rf_main import random_forest_main
-from src.decision_tree.decision_tree_train import decision_tree_main
-from src.visualize import plot_confusion_matrix, plot_feature_importances, plot_roc_curve, plot_survival_probability_histogram, plot_model_accuracies
 from src.svm.svm_train import svm_main
-from sklearn.metrics import accuracy_score
+from src.visualize import (
+    plot_confusion_matrix,
+    plot_feature_importances,
+    plot_model_accuracies,
+    plot_roc_curve,
+    plot_survival_probability_histogram,
+)
 
 # Load data
-train_data = pd.read_csv('data/train.csv')
-test_data = pd.read_csv('data/test.csv')
+train_data = pd.read_csv("data/train.csv")
+test_data = pd.read_csv("data/test.csv")
 
 
 def create_submission_file(test_data, test_predictions):
-    output = pd.DataFrame({'PassengerId': test_data.PassengerId, 'Survived': test_predictions})
-    output.to_csv('submission.csv', index=False)
+    output = pd.DataFrame(
+        {"PassengerId": test_data.PassengerId, "Survived": test_predictions}
+    )
+    output.to_csv("submission.csv", index=False)
     print("Your submission was successfully saved!")
-   
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -29,9 +39,13 @@ def parse_args():
         Select the model via the --model argument.
         """
     )
-    parser.add_argument('--model', type=str, default='random_forest',
-                        choices=['random_forest', 'svm', 'decision_tree', 'all'],
-                        help='Specify the model to train or use "all" to compare models.')
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="random_forest",
+        choices=["random_forest", "svm", "decision_tree", "all"],
+        help='Specify the model to train or use "all" to compare models.',
+    )
     return parser.parse_args()
 
 
@@ -40,28 +54,33 @@ def train_and_score(model_func, X_train, y_train, X_val, y_val):
     model, predictions = model_func(X_train, y_train, X_val, y_val)
     return accuracy_score(y_val, predictions)
 
+
 def main():
     args = parse_args()
 
     # Load data
     try:
-        train_data = pd.read_csv('data/train.csv')
-        test_data = pd.read_csv('data/test.csv')
+        train_data = pd.read_csv("data/train.csv")
+        test_data = pd.read_csv("data/test.csv")
     except FileNotFoundError as e:
         print(f"Error: {e}")
-        print("Make sure train.csv and test.csv are in the 'data' directory and try again.")
+        print(
+            "Make sure train.csv and test.csv are in the 'data' directory and try again."
+        )
         return
 
     # Process data
     X_train, X_test = preprocess_data(train_data, test_data)
     y_train = train_data["Survived"]
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=0)
-    
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_train, y_train, test_size=0.2, random_state=0
+    )
+
     # Train and evaluate the RandomForestClassifier model
-    if args.model == 'random_forest':
+    if args.model == "random_forest":
         model, predictions = random_forest_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
-    elif args.model == 'decision_tree':
+    elif args.model == "decision_tree":
         # Convert X_test to list of lists for decision tree compatibility
         X_test_list = X_test.values.tolist()
         # Call the Decision Tree training and evaluation function
@@ -71,12 +90,12 @@ def main():
         # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
-    elif args.model == 'all':
+    elif args.model == "all":
         # Function Handler
         model_functions = {
-            'Random Forest': random_forest_main,
-            'SVM': svm_main,
-            'Decision Tree': decision_tree_main,
+            "Random Forest": random_forest_main,
+            "SVM": svm_main,
+            "Decision Tree": decision_tree_main,
         }
 
         # Initialize dictionary to store accuracy scores
@@ -88,7 +107,7 @@ def main():
 
         # Call the combined plot function with the accuracy scores
         plot_model_accuracies(model_accuracies)
-        return # subvert the individual plotting below
+        return  # subvert the individual plotting below
     else:
         print("No valid model selected. Defaulting to Random Forest.")
         return

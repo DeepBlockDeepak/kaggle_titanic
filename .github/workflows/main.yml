@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +20,12 @@ jobs:
     - name: Run unit tests
       run: |
         poetry run python -m unittest discover -s tests
+    - name: Check formatting with isort
+      run: |
+        poetry run isort --check-only .
+    - name: Check formatting with black
+      run: |
+        poetry run black --check .
+    - name: Lint with ruff
+      run: |
+        poetry run ruff .
