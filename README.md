@@ -22,37 +22,38 @@ The project features three distinct models: RandomForestClassifier, SVM, and a h
 
 ## Visual Insights
 
-- ![Model Accuracy Comparison](outputs/model_accuracies.png)
-    ***Model Accuracy Comparison:*** A comparative view of the accuracy scores achieved by each model. 
+![Model Accuracy Comparison](outputs/model_accuracies.png)
+***Model Accuracy Comparison:*** A comparative view of the accuracy scores achieved by each model.
 
 
-- ![Feature Importances](outputs/randomforestclassifier_feature_importances.png)
-    ***Feature Importances:*** This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/features.py**'s `extract_title()`.
+
+![Feature Importances](outputs/randomforestclassifier_feature_importances.png)
+***Feature Importances:*** This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/features.py**'s `extract_title()`.
 
 
-- ![Confusion Matrix](outputs/randomforestclassifier_confusion_matrix.png)
+![Confusion Matrix](outputs/randomforestclassifier_confusion_matrix.png)
 
-    ***Confusion Matrix:*** *(0 for not survived, 1 for survived). The y-axis represents the actual labels.*
+***Confusion Matrix:*** *(0 for not survived, 1 for survived). The y-axis represents the actual labels.*
 
-    - **True Negatives (TN)**: The model correctly predicted 102 passengers as not survived.
-    - **False Positives (FP)**: The model incorrectly predicted 8 passengers as survived when they didn't.
-    - **False Negatives (FN)**: The model incorrectly predicted 19 passengers as not survived when they did survive.
-    - **True Positives (TP)**: The model correctly predicted 50 passengers as survived.
-
-
-- ![ROC Curve](outputs/randomforestclassifier_roc_curve.png)
-    ***ROC Curve:*** *Evaluating Model's Diagnostic Ability*
-
-    - **True Positive Rate (TPR)**: Reflects the proportion of actual positives correctly identified by the model. 
-    - **False Positive Rate (FPR)**: Indicates the proportion of actual negatives incorrectly labeled as positives by the model.
-    - **AUC Score**: Represents the Area Under the ROC Curve (AUC = 0.89), quantifying the overall ability of the model to discriminate between the positive and negative classes.
-    - **Curve Interpretation**: The closer the curve follows the left-hand border and then the top border of the ROC space, the more accurate the test. Conversely, a curve near the 45-degree diagonal represents a model with no discriminative ability (equivalent to random guessing).
+- **True Negatives (TN)**: The model correctly predicted 102 passengers as not survived.
+- **False Positives (FP)**: The model incorrectly predicted 8 passengers as survived when they didn't.
+- **False Negatives (FN)**: The model incorrectly predicted 19 passengers as not survived when they did survive.
+- **True Positives (TP)**: The model correctly predicted 50 passengers as survived.
 
 
-- ![Survival Probability Histogram](outputs/randomforestclassifier_survival_histogram.png)
-    ***Histogram*** *of Predicted Survival Probabilities*
+![ROC Curve](outputs/randomforestclassifier_roc_curve.png)
+***ROC Curve:*** *Evaluating Model's Diagnostic Ability*
 
-    - This histogram shows the spread of the predicted probabilities for survival by the RF model.
+- **True Positive Rate (TPR)**: Reflects the proportion of actual positives correctly identified by the model. 
+- **False Positive Rate (FPR)**: Indicates the proportion of actual negatives incorrectly labeled as positives by the model.
+- **AUC Score**: Represents the Area Under the ROC Curve (AUC = 0.89), quantifying the overall ability of the model to discriminate between the positive and negative classes.
+- **Curve Interpretation**: The closer the curve follows the left-hand border and then the top border of the ROC space, the more accurate the test. Conversely, a curve near the 45-degree diagonal represents a model with no discriminative ability (equivalent to random guessing).
+
+
+![Survival Probability Histogram](outputs/randomforestclassifier_survival_histogram.png)
+***Histogram*** *of Predicted Survival Probabilities*
+
+- This histogram shows the spread of the predicted probabilities for survival by the RF model.
 
 
 ## Data Description
@@ -70,11 +71,18 @@ The project is structured to provide a comprehensive approach to the Titanic sur
 
 **Example Usage:**
 ```bash
-> poetry run python main.py --model random_forest
-> poetry run python main.py --model decision_tree
-> poetry run python main.py --model svm
-> poetry run python main.py # defaults to random_forest
+poetry run python main.py --model random_forest
 ```
+```bash
+poetry run python main.py --model decision_tree
+```
+```bash
+poetry run python main.py --model svm
+```
+```bash
+poetry run python main.py # defaults to random_forest
+```
+
 
 - `rf_hyperparameter_tuning.py`: This script utilizes [GridSearchCV from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to exhaustively search through a predefined grid of hyperparameters and find the combination that yields the best performance. The script processes the training data, splits it for validation, and applies a grid search on the RandomForestClassifier. Interestingly, this script doesn't not produce a more accurate model than that provided with default values inside of [Random Forest Main Script](src/random_forest/rf_main.py)
 
