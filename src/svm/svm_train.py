@@ -13,7 +13,7 @@ def train_svm_model(X_train, y_train):
     
     return svm_model
 
-def svm_main(X_train, X_val, y_train, y_val):
+def svm_main(X_train, y_train, X_val, y_val):
 
     # Train the SVM model
     svm_model = train_svm_model(X_train, y_train)

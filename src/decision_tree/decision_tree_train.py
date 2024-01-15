@@ -68,6 +68,6 @@ def decision_tree_main(X_train, y_train, X_val, y_val):
     # Score the Decision Tree with predictions on the validation set
     predictions = [tree.predict(val_data) for val_data in X_val_list]
     # debug_accuracy_score(y_val_list, predictions)
-    print(f"Decision Tree Classification Accuracy: {custom_accuracy_score(y_val_list, predictions):.2f}")
+    print(f"Model: 'Decision Tree', Accuracy: {accuracy_score(y_val_list, predictions):.2f}")
 
     return tree, predictions
