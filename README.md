@@ -24,7 +24,7 @@ The project features three distinct models: RandomForestClassifier, SVM, and a h
 
 ![Model Accuracy Comparison](outputs/model_accuracies.png)
 
-***Accuracy Comparison:*** A comparative view of the accuracy scores achieved by each model.
+***Model Accuracy Comparison:*** A comparative view of the accuracy scores achieved by each model.
 
 
 
