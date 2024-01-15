@@ -11,19 +11,30 @@ The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle compe
 
 
 ## Model Details
-The model is a RandomForestClassifier from scikit-learn, trained with 100 trees and a maximum depth of 10 (`RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)`). The model is trained in `src/train.py` and persisted to `models/titanic_model.pkl`.
+- **RandomForestClassifier**:
+The model is a RandomForestClassifier from scikit-learn, trained with 100 trees and a maximum depth of 10 (`RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)`). The model is trained in `src/random_forest/rf_main.py` and persisted to `models/rf_titanic_model.pkl`. (`Accuracy: 0.85`)
+
+- **Hand-Rolled Decision Tree Classifier**: A custom decision tree model is implemented from scratch, showcasing a more manual approach to classification. The model constructs a decision tree using Gini Impurity and Information Gain as metrics for optimal feature selection and splitting. The tree consists of `Leaf` and `Internal_Node` classes to handle predictions. The decision-making process traverses the tree, making decisions at each node based on the data until it reaches a leaf node. The model is detailed in `src/decision_tree/decision_tree.py` and demonstrates comparable performance to the SVM model (`Accuracy: 0.72`).
+
+- **SVM (Support Vector Machine)**: The project incorporates a Support Vector Machine model using the `SVC` class from scikit-learn. The SVM model is configured with an RBF kernel (`kernel='rbf'`), a scale gamma value (`gamma='scale'`), and a regularization parameter C set to 1 (`C=1`). This model is particularly effective for high-dimensional spaces and is implemented in `src/svm/svm_train.py`. It is trained and evaluated in a similar fashion to the RandomForestClassifier. (`Accuracy: 0.73`)
+
+
+
 
 ## Model Performance
-The RandomForestClassifier model achieves an accuracy of **0.85**.
+The project features three distinct models: RandomForestClassifier, SVM, and a hand-rolled Decision Tree Classifier. Each model has been evaluated for its accuracy:
+- The RandomForestClassifier Accuracy : **0.85**
+- Decision Tree Classifier Accuracy : **0.72**
+- SVM Accuracy : **0.73**
 
 ### Visual Insights
 The following images were generated during the most recent model evaluation:
 
-- ![Feature Importances](outputs/feature_importances.png)
+- ![Feature Importances](outputs/randomforestclassifier_feature_importances.png)
     *Feature Importances:* This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/features.py**'s `extract_title()`.
 
 
-- ![Confusion Matrix](outputs/confusion_matrix.png)
+- ![Confusion Matrix](outputs/randomforestclassifier_confusion_matrix.png)
 
     *Confusion Matrix: (0 for not survived, 1 for survived). The y-axis represents the actual labels.*
 
@@ -33,7 +44,7 @@ The following images were generated during the most recent model evaluation:
     - **True Positives (TP)**: The model correctly predicted 50 passengers as survived.
 
 
-- ![ROC Curve](outputs/roc_curve.png)
+- ![ROC Curve](outputs/randomforestclassifier_roc_curve.png)
     *ROC Curve: Evaluating Model's Diagnostic Ability*
 
     - **True Positive Rate (TPR)**: Reflects the proportion of actual positives correctly identified by the model. 
@@ -42,7 +53,7 @@ The following images were generated during the most recent model evaluation:
     - **Curve Interpretation**: The closer the curve follows the left-hand border and then the top border of the ROC space, the more accurate the test. Conversely, a curve near the 45-degree diagonal represents a model with no discriminative ability (equivalent to random guessing).
 
 
-- ![Survival Probability Histogram](outputs/survival_histogram.png)
+- ![Survival Probability Histogram](outputs/randomforestclassifier_survival_histogram.png)
     *Histogram of Predicted Survival Probabilities: Analyzing the Spread of the Model's Predictions*
 
     - This histogram shows the distribution of the predicted probabilities for survival by the model.
