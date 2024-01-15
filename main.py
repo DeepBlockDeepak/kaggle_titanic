@@ -4,8 +4,9 @@ from sklearn.model_selection import train_test_split
 from src.preprocess import preprocess_data
 from src.random_forest.rf_main import random_forest_main
 from src.decision_tree.decision_tree_train import decision_tree_main
-from src.visualize import plot_confusion_matrix, plot_feature_importances, plot_roc_curve, plot_survival_probability_histogram
+from src.visualize import plot_confusion_matrix, plot_feature_importances, plot_roc_curve, plot_survival_probability_histogram, plot_model_accuracies
 from src.svm.svm_train import svm_main
+from sklearn.metrics import accuracy_score
 
 # Load data
 train_data = pd.read_csv('data/train.csv')
@@ -29,10 +30,15 @@ def parse_args():
         """
     )
     parser.add_argument('--model', type=str, default='random_forest',
-                        choices=['random_forest', 'svm', 'decision_tree'],
-                        help='Specify the model to train: random_forest, svm, or decision_tree.')
+                        choices=['random_forest', 'svm', 'decision_tree', 'all'],
+                        help='Specify the model to train or use "all" to compare models.')
     return parser.parse_args()
 
+
+# Train and evaluate models based with their respective main scripts
+def train_and_score(model_func, X_train, y_train, X_val, y_val):
+    model, predictions = model_func(X_train, y_train, X_val, y_val)
+    return accuracy_score(y_val, predictions)
 
 def main():
     args = parse_args()
@@ -43,7 +49,7 @@ def main():
         test_data = pd.read_csv('data/test.csv')
     except FileNotFoundError as e:
         print(f"Error: {e}")
-        print("Make sure the data files are in the 'data' directory and try again.")
+        print("Make sure train.csv and test.csv are in the 'data' directory and try again.")
         return
 
     # Process data
@@ -63,19 +69,36 @@ def main():
         test_predictions = [model.predict(test_data) for test_data in X_test_list]
     elif args.model == "svm":
         # Call the SVM training and evaluation function
-        model, predictions = svm_main(X_train, X_val, y_train, y_val)
+        model, predictions = svm_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
+    elif args.model == 'all':
+        # Function Handler
+        model_functions = {
+            'Random Forest': random_forest_main,
+            'SVM': svm_main,
+            'Decision Tree': decision_tree_main,
+        }
+
+        # Initialize dictionary to store accuracy scores
+        model_accuracies = {}
+        # Iterate over models to train and evaluate
+        for model_name, model_func in model_functions.items():
+            accuracy = train_and_score(model_func, X_train, y_train, X_val, y_val)
+            model_accuracies[model_name] = accuracy
+
+        # Call the combined plot function with the accuracy scores
+        plot_model_accuracies(model_accuracies)
+        return # subvert the individual plotting below
     else:
         print("No valid model selected. Defaulting to Random Forest.")
         return
 
-    # Plot visualizations
     plot_feature_importances(model, X_train)
     plot_confusion_matrix(model, y_val, predictions)
     plot_roc_curve(model, X_val, y_val)
     plot_survival_probability_histogram(model, X_test)
 
-    # Prepare submission file
+    # Prepare the submission file which writes /submission.csv
     create_submission_file(test_data, test_predictions)
 
 

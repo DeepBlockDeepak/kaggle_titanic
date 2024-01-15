@@ -57,3 +57,27 @@ def plot_survival_probability_histogram(model, X_test):
         plt.savefig(f'outputs/{model_name.lower()}_survival_histogram.png')
     else:
         print(f"Survival probability histogram cannot be plotted for the model {model_name}.")
+
+
+def plot_model_accuracies(model_accuracies):
+    """
+    Plot a histogram comparing the accuracy scores of different models.
+
+    Args:
+    model_accuracies (dict): A dictionary with model names as keys and their accuracy scores as values.
+    """
+    # Create a DataFrame from the dictionary for easier plotting
+    accuracies_df = pd.DataFrame(list(model_accuracies.items()), columns=['Model', 'Accuracy'])
+
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    ax = accuracies_df.plot(kind='bar', x='Model', y='Accuracy', legend=False, color='skyblue')
+    plt.title('Comparison of Model Accuracies')
+    plt.ylabel('Accuracy Score')
+    plt.xlabel('Models')
+    plt.xticks(rotation=0)
+    plt.ylim(0, 1)  # Assuming accuracy scores are between 0 and 1
+    for i in ax.containers:
+        ax.bar_label(i,)
+    plt.tight_layout()
+    plt.savefig('outputs/model_accuracies.png')    
