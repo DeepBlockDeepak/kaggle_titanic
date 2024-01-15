@@ -4,11 +4,15 @@
 # sys.path.append('/path/to/kaggle_titanic/root')
 
 from src.preprocess import preprocess_data
-from decision_tree import build_tree, classify 
+from src.decision_tree.decision_tree import build_tree, classify 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import pandas as pd
 import numpy as np
+
+def custom_accuracy_score(true_labels, predictions):
+    correct = sum(1 for true, pred in zip(true_labels, predictions) if true == pred)
+    return correct / len(true_labels)
 
 
 def debug_accuracy_score(y_val_list, predictions):
@@ -50,14 +54,7 @@ def debug_accuracy_score(y_val_list, predictions):
         print("Error calculating accuracy:", e)
 
 
-def decision_tree_main():
-    # Load and preprocess data
-    train_data = pd.read_csv('/Users/jmeds/code/kaggle_titanic/data/train.csv')
-    test_data = pd.read_csv('/Users/jmeds/code/kaggle_titanic/data/test.csv')
-    X_train, X_test = preprocess_data(train_data, test_data)
-    y_train = train_data["Survived"]
-
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=0)
+def decision_tree_main(X_train, y_train, X_val, y_val):
 
     # Convert DataFrame to list of lists for the decision tree compatibility
     X_train_list = X_train.values.tolist()
@@ -69,10 +66,8 @@ def decision_tree_main():
     tree = build_tree(X_train_list, y_train_list)
 
     # Score the Decision Tree with predictions on the validation set
-    predictions = [classify(val_data, tree) for val_data in X_val_list]
-    print(f"Decision Tree Classification Accuracy: {accuracy_score(y_val_list, predictions):.2f}")
-
+    predictions = [tree.predict(val_data) for val_data in X_val_list]
     # debug_accuracy_score(y_val_list, predictions)
+    print(f"Model: 'Decision Tree', Accuracy: {accuracy_score(y_val_list, predictions):.2f}")
 
-if __name__ == "__main__":
-    decision_tree_main()
+    return tree, predictions
