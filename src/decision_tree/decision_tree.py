@@ -96,29 +96,3 @@ def build_tree(data, labels, value=""):
         branches.append(branch)
 
     return Internal_Node(best_feature, branches, value)
-
-
-def classify(datapoint, tree):
-    if isinstance(tree, Leaf):
-        return max(tree.labels.items(), key=lambda item: item[1])[0]
-
-    # else the tree is an Internal_Node
-    value = datapoint[tree.feature]
-    for branch in tree.branches:
-        if branch.value == value:
-            return classify(datapoint, branch)
-
-    # If no matching branch is found, return the most common label
-    # Aggregate labels from all leaves
-    all_leaf_labels = []
-
-    def collect_leaf_labels(node):
-        if isinstance(node, Leaf):
-            all_leaf_labels.extend(node.labels.elements())
-        else:
-            for branch in node.branches:
-                collect_leaf_labels(branch)
-
-    collect_leaf_labels(tree)
-    # Return the most common label
-    return Counter(all_leaf_labels).most_common(1)[0][0]
