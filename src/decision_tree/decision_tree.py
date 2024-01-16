@@ -53,7 +53,6 @@ def split(dataset, labels, column):
 
 
 def gini(dataset):
-    impurity = 1
     label_counts = Counter(dataset)
     impurity = 1 - sum(
         (l_count / len(dataset)) ** 2 for l_count in label_counts.values()
