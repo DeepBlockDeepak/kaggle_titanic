@@ -25,6 +25,7 @@ class Internal_Node:
         self.feature: int = (
             feature  # The column index of the feature this node splits on.
         )
+
         self.branches: List[
             Union["Leaf", "Internal_Node"]
         ] = branches  # Child nodes, which can be either further Internal_Nodes or Leafs.
