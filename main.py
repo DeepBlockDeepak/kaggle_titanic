@@ -8,6 +8,7 @@ from src.decision_tree.decision_tree_train import decision_tree_main
 from src.preprocess import preprocess_data
 from src.random_forest.rf_main import random_forest_main
 from src.svm.svm_train import svm_main
+from src.naive_bayes.bayes_main import naive_bayes_main
 from src.visualize import (
     plot_confusion_matrix,
     plot_feature_importances,
@@ -43,7 +44,7 @@ def parse_args():
         "--model",
         type=str,
         default="random_forest",
-        choices=["random_forest", "svm", "decision_tree", "all"],
+        choices=["random_forest", "svm", "decision_tree","naive_bayes", "all"],
         help='Specify the model to train or use "all" to compare models.',
     )
     return parser.parse_args()
@@ -90,12 +91,17 @@ def main():
         # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
+    elif args.model == "naive_bayes":
+        # Call the Naive Bayes training and evaluation function
+        model, predictions = naive_bayes_main(X_train, y_train, X_val, y_val)
+        test_predictions = model.predict(X_test)        
     elif args.model == "all":
         # Function Handler
         model_functions = {
             "Random Forest": random_forest_main,
             "SVM": svm_main,
             "Decision Tree": decision_tree_main,
+            "Naive Bayes": naive_bayes_main,
         }
 
         # Initialize dictionary to store accuracy scores
