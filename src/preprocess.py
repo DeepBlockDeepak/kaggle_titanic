@@ -50,6 +50,7 @@ def preprocess_data(train_data, test_data):
             [train_data[categorical_features], test_data[categorical_features]], axis=0
         )
     )
+    # Split back into the training and test sets
     train_categorical_data = combined_categorical_data[: len(train_data)]
     test_categorical_data = combined_categorical_data[len(train_data) :]
 
