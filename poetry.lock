@@ -656,7 +656,6 @@ files = [
 numpy = [
     {version = ">=1.22.4,<2", markers = "python_version < \"3.11\""},
     {version = ">=1.23.2,<2", markers = "python_version == \"3.11\""},
-    {version = ">=1.26.0,<2", markers = "python_version >= \"3.12\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -1085,6 +1084,41 @@ files = [
 ]
 
 [[package]]
+name = "tensorflow-io-gcs-filesystem"
+version = "0.34.0"
+description = "TensorFlow IO"
+optional = false
+python-versions = ">=3.7, <3.12"
+files = [
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp310-cp310-macosx_10_14_x86_64.whl", hash = "sha256:d831702fbb270996b27cda7fde06e0825b2ea81fd8dd3ead35242f4f8b3889b8"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp310-cp310-macosx_12_0_arm64.whl", hash = "sha256:b9a93fcb01db269bc845a1ced431f3c61201755ce5f9ec4885760f30122276ef"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5813c336b4f7cb0a01ff4cc6cbd3edf11ef67305baf0e3cf634911b702f493f8"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2b035f4c92639657b6d376929d550ac3dee9e6c0523eb434eefe0a27bae3d05b"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp311-cp311-macosx_10_14_x86_64.whl", hash = "sha256:a17a616d2c7fae83de4424404815843507d40d4eb0d507c636a5493a20c3d958"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:ec4604c99cbb5b708f4516dee27aa655abae222b876c98b740f4c2f89dd5c001"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp311-cp311-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:cbe26c4a3332589c7b724f147df453b5c226993aa8d346a15536358d77b364c4"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6e6353123a5b51397950138a118876af833a7db66b531123bb86f82e80ab0e72"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:f211d2b3db8f9931765992b607b71cbfb98c8cd6169079d004a67a94ab10ecb4"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp37-cp37m-macosx_12_0_arm64.whl", hash = "sha256:d3feba2dd76f7c188137c34642d68d378f0eed81636cb95090ecb1496722707c"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:44ad387a812a78e7424bb8bee3820521ae1c044bddf72b1e163e8df95c124a74"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:7f60183473f0ca966451bb1d1bb5dc29b3cf9c74d1d0e7f2ed46760ed56bd4af"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-macosx_12_0_arm64.whl", hash = "sha256:3f346b287ed2400e09b13cfd8524222fd70a66aadb9164c645286c2087007e9f"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:027a07553367187f918a99661f63ae0506b91b77a70bee9c7ccaf3920bf7cfe7"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:8d8664bddbe4e7b56ce94db8b93ea9077a158fb5e15364e11e29f93015ceea24"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:182b0fbde7e9a537fda0b354c28b0b6c035736728de8fe2db7ef49cf90352014"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp39-cp39-macosx_12_0_arm64.whl", hash = "sha256:0dafed144673e1173528768fe208a7c5a6e8edae40208381cac420ee7c918ec9"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:396bfff61b49f80b86ddebe0c76ae0f2731689cee49ad7d782625180b50b13af"},
+    {file = "tensorflow_io_gcs_filesystem-0.34.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b20622f8572fcb6c93e8f7d626327472f263e47ebd63d2153ef09162ef5ef7b5"},
+]
+
+[package.extras]
+tensorflow = ["tensorflow (>=2.13.0,<2.14.0)"]
+tensorflow-aarch64 = ["tensorflow-aarch64 (>=2.13.0,<2.14.0)"]
+tensorflow-cpu = ["tensorflow-cpu (>=2.13.0,<2.14.0)"]
+tensorflow-gpu = ["tensorflow-gpu (>=2.13.0,<2.14.0)"]
+tensorflow-rocm = ["tensorflow-rocm (>=2.13.0,<2.14.0)"]
+
+[[package]]
 name = "text-unidecode"
 version = "1.3"
 description = "The most basic Text::Unidecode port"
@@ -1178,5 +1212,5 @@ files = [
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "d9491c83bd7c981066e9d9b86798cb56c2c1d6e6c92006984e14dde0fcbb6f7a"
+python-versions = ">=3.10,<3.12"
+content-hash = "6d018d332250bdc3626280525b0ddac03806d8ce1466bf1350f19d762626b98a"
