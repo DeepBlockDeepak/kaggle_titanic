@@ -45,7 +45,14 @@ def parse_args():
         "--model",
         type=str,
         default="random_forest",
-        choices=["random_forest", "svm", "decision_tree", "naive_bayes", "tf_keras", "all"],
+        choices=[
+            "random_forest",
+            "svm",
+            "decision_tree",
+            "naive_bayes",
+            "tf_keras",
+            "all",
+        ],
         help='Specify the model to train or use "all" to compare models.',
     )
     return parser.parse_args()
