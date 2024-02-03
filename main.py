@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 from src.decision_tree.decision_tree_train import decision_tree_main
+from src.naive_bayes.bayes_main import naive_bayes_main
 from src.preprocess import preprocess_data
 from src.random_forest.rf_main import random_forest_main
 from src.svm.svm_train import svm_main
@@ -44,7 +45,7 @@ def parse_args():
         "--model",
         type=str,
         default="random_forest",
-        choices=["random_forest", "svm", "decision_tree", "tf_keras", "all"],
+        choices=["random_forest", "svm", "decision_tree", "naive_bayes", "tf_keras", "all"],
         help='Specify the model to train or use "all" to compare models.',
     )
     return parser.parse_args()
@@ -91,6 +92,10 @@ def main():
         # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
+    elif args.model == "naive_bayes":
+        # Call the Naive Bayes training and evaluation function
+        model, predictions = naive_bayes_main(X_train, y_train, X_val, y_val)
+        test_predictions = model.predict(X_test)
     elif args.model == "tf_keras":
         model, predictions, scaler = tf_keras_main(
             X_train, y_train, X_val, y_val, return_scaler=True
@@ -113,9 +118,6 @@ def main():
             "Random Forest": random_forest_main,
             "SVM": svm_main,
             "Decision Tree": decision_tree_main,
-            "tf keras Sequential": lambda X_train, y_train, X_val, y_val: tf_keras_main(
-                X_train, y_train, X_val, y_val, return_scaler=False
-            ),
         }
 
         # Initialize dictionary to store accuracy scores
