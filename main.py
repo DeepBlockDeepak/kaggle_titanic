@@ -125,7 +125,9 @@ def main():
             "Random Forest": random_forest_main,
             "SVM": svm_main,
             "Decision Tree": decision_tree_main,
-            "tf_keras": lambda X_train, y_train, X_val, y_val: tf_keras_main(X_train, y_train, X_val, y_val, return_scaler=False)
+            "tf_keras": lambda X_train, y_train, X_val, y_val: tf_keras_main(
+                X_train, y_train, X_val, y_val, return_scaler=False
+            ),
         }
 
         # Initialize dictionary to store accuracy scores
