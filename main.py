@@ -1,15 +1,16 @@
 import argparse
 
 import pandas as pd
+import torch
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 from src.decision_tree.decision_tree_train import decision_tree_main
 from src.naive_bayes.bayes_main import naive_bayes_main
 from src.preprocess import preprocess_data
+from src.pytorch.pytorch_binary import pytorch_main
 from src.random_forest.rf_main import random_forest_main
 from src.svm.svm_train import svm_main
-from src.tf_keras_sequential.tf_keras_sequential_main import tf_keras_main
 from src.visualize import (
     plot_confusion_matrix,
     plot_feature_importances,
@@ -50,7 +51,7 @@ def parse_args():
             "svm",
             "decision_tree",
             "naive_bayes",
-            "tf_keras",
+            "pytorch",
             "all",
         ],
         help='Specify the model to train or use "all" to compare models.',
@@ -103,29 +104,32 @@ def main():
         # Call the Naive Bayes training and evaluation function
         model, predictions = naive_bayes_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
-    elif args.model == "tf_keras":
-        model, predictions, scaler = tf_keras_main(
+    elif args.model == "pytorch":
+        model, predictions, scaler = pytorch_main(
             X_train, y_train, X_val, y_val, return_scaler=True
         )
 
         # Ensure X_test is preprocessed similarly to X_train and X_val
-        # Assuming you have a scaler fit on X_train, you'll need to scale X_test.
-        # If you haven't saved your scaler object, this step will need adjustments.
-        X_test_scaled = scaler.transform(X_test)  # Ensure `scaler` is accessible here
+        X_test_scaled = scaler.transform(X_test)
 
-        # Generate predictions on the scaled test data
-        test_predictions_proba = model.predict(X_test_scaled)
+        # Convert the scaled test data to a tensor
+        X_test_tensor = torch.tensor(X_test_scaled, dtype=torch.float32)
 
-        # Convert probabilities to binary class labels
-        # .flatten() to convert to 1-dimensional array of binary class labels (0 or 1)
-        test_predictions = (test_predictions_proba > 0.5).astype("int32").flatten()
+        # PyTorch model evaluation
+        model.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # Disable gradient computation for inference
+            test_predictions_proba = model(X_test_tensor)
+            # Apply threshold to convert probabilities to binary class labels
+            test_predictions = (
+                (test_predictions_proba.squeeze() > 0.5).int().numpy().flatten()
+            )
     elif args.model == "all":
         # Function Handler
         model_functions = {
             "Random Forest": random_forest_main,
             "SVM": svm_main,
             "Decision Tree": decision_tree_main,
-            "tf_keras": lambda X_train, y_train, X_val, y_val: tf_keras_main(
+            "pytorch": lambda X_train, y_train, X_val, y_val: pytorch_main(
                 X_train, y_train, X_val, y_val, return_scaler=False
             ),
         }
