@@ -59,9 +59,7 @@ def train_model(
                 val_loss += loss.item()
 
         val_loss /= len(val_loader)  # Average validation loss
-        print(
-            f"Epoch {epoch+1}, Loss: {running_loss / len(train_loader):.2f}, Validation Loss: {val_loss:.2f}"
-        )
+        # print( f"Epoch {epoch+1}, Loss: {running_loss / len(train_loader):.2f}, Validation Loss: {val_loss:.2f}")
 
         # Check for validation loss improvement
         if val_loss < best_val_loss:
@@ -75,7 +73,7 @@ def train_model(
 
         # Early stopping condition
         if patience_counter >= patience:
-            print("Early stopping triggered.")
+            # print("Early stopping triggered.")
             break
 
 
