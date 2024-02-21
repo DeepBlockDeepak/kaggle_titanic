@@ -10,6 +10,7 @@ from src.naive_bayes.bayes_main import naive_bayes_main
 from src.preprocess import preprocess_data
 from src.pytorch.pytorch_binary import pytorch_main
 from src.random_forest.rf_main import random_forest_main
+from src.rfc_hand_rolled.random_forest import rfc_handroll_main
 from src.svm.svm_train import svm_main
 from src.visualize import (
     plot_confusion_matrix,
@@ -50,6 +51,7 @@ def parse_args():
             "random_forest",
             "svm",
             "decision_tree",
+            "rfc_hand",
             "naive_bayes",
             "pytorch",
             "all",
@@ -96,6 +98,12 @@ def main():
         # Call the Decision Tree training and evaluation function
         model, predictions = decision_tree_main(X_train, y_train, X_val, y_val)
         test_predictions = [model.predict(test_data) for test_data in X_test_list]
+    elif args.model == "rfc_hand":
+        # Convert X_test to list of lists for decision tree compatibility
+        X_test_list = X_test.values.tolist()
+        # Call the Decision Tree training and evaluation function
+        model, predictions = rfc_handroll_main(X_train, y_train, X_val, y_val)
+        test_predictions = model.predict(X_test_list)
     elif args.model == "svm":
         # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
@@ -129,6 +137,7 @@ def main():
             "Random Forest": random_forest_main,
             "SVM": svm_main,
             "Decision Tree": decision_tree_main,
+            "RFC Scratch": rfc_handroll_main,
             "pytorch": lambda X_train, y_train, X_val, y_val: pytorch_main(
                 X_train, y_train, X_val, y_val, return_scaler=False
             ),
