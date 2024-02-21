@@ -43,7 +43,7 @@ def debug_accuracy_score(y_val_list, predictions):
     # Attempt to calculate accuracy
     try:
         accuracy = accuracy_score(y_val_list, predictions)
-        print("Accuracy:", accuracy)
+        print(f"Accuracy: {accuracy:.2f}")
     except ValueError as e:
         print("Error calculating accuracy:", e)
 
