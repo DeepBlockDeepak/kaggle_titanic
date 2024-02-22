@@ -56,49 +56,68 @@ class Internal_Node:
 
 
 def split(dataset, labels, column):
+    # initialize lists to hold subsets of data and labels after splitting
     data_subsets = []
     label_subsets = []
+    # extract unique values from the specified column to determine split points
     unique_vals = list(set([data[column] for data in dataset]))
+    # Sort the unique values for consistent splitting
     unique_vals.sort()
+
+    # for each unique value, create a subset of data and labels where the data matches the unique value
     for k in unique_vals:
         new_data_subset = [data for data in dataset if data[column] == k]
         new_label_subset = [
             labels[i] for i, data in enumerate(dataset) if data[column] == k
         ]
 
+        # add the subsets to their respective lists
         data_subsets.append(new_data_subset)
         label_subsets.append(new_label_subset)
 
+    # return the subsets of data and labels after splitting
     return data_subsets, label_subsets
 
 
 def gini(dataset):
+    # count the occurrences of each label in the dataset
     label_counts = Counter(dataset)
+    # Calculate the Gini Impurity for the dataset
     impurity = 1 - sum(
         (l_count / len(dataset)) ** 2 for l_count in label_counts.values()
     )
+    # Gini Impurity quantifies the disorder of a set; 0 represents complete purity
     return impurity
 
 
 def information_gain(starting_labels, split_labels):
+    # calculate the initial impurity before the split
     info_gain = gini(starting_labels)
+    # calculate weighted impurity of each split
     weighted_impurity = sum(
         (len(subset) / len(starting_labels)) * gini(subset) for subset in split_labels
     )
 
+    # Information gain is the reduction in impurity after the split
     info_gain -= weighted_impurity
 
     return info_gain
 
 
 def find_best_split(dataset, labels):
+    # initialize variables to track the best split
     best_feature, best_gain = 0, 0
+    # iterate over each feature in the dataset
     for feature in range(len(dataset[0])):
+        # split the dataset by the current feature
         data_subsets, label_subsets = split(dataset, labels, feature)
+        # calculate the information gain from this split
         gain = information_gain(labels, label_subsets)
+        # If this split provides a better information gain, update best split
         if gain > best_gain:
             best_feature, best_gain = feature, gain
 
+    # return the feature and gain of the best split found
     return best_feature, best_gain
 
 

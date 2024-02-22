@@ -1,7 +1,7 @@
 # Titanic Survival Prediction Project
 
 ## Overview
-This project is an approach to the [Kaggle Titanic competition](https://www.kaggle.com/c/titanic), aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training with a RandomForestClassifier, and predicting survival outcomes.
+This project is an approach to the [Kaggle Titanic competition](https://www.kaggle.com/c/titanic), aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training, and predicting survival outcomes. Models range from traditional models like RandomForest and SVM to custom implementations of decision trees and ensemble methods, to deep learning with PyTorch. My larger aim is to provide a comprehensive comparison of these methods by showcasing their functionalities and resulting performances.
 
 
 ## Model Details
@@ -12,12 +12,24 @@ The model is a [RandomForestClassifier from scikit-learn](https://scikit-learn.o
 
 - **SVM (Support Vector Machine)**: The project incorporates a Support Vector Machine model using the [SVC class from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC). The SVM model is configured with an RBF kernel (`kernel='rbf'`), a scale gamma value (`gamma='scale'`), and a regularization parameter C set to 1 (`C=1`). This model is particularly effective for high-dimensional spaces and is implemented in `src/svm/svm_train.py`. It is trained and evaluated in a similar fashion to the RandomForestClassifier. (`Accuracy: 0.73`)
 
+- **Hand-Rolled RandomForestClassifier**: An extension of the hand-rolled Decision Tree Classifier, this model implements the RandomForest algorithm from scratch. It constructs multiple decision trees on bootstrapped samples of the dataset and uses majority voting for classification. This approach demonstrates the power of ensemble learning in improving prediction accuracy and robustness over individual decision trees. The implementation can be found in `src/rfc_hand_rolled/random_forest.py`. (Accuracy: Reaches as high as **0.87**)
+
+- **Naive Bayes**: Utilizes the probabilistic Naive Bayes algorithm for classification, making the strong assumption that features are independent given the class label. Despite its simplicity, this model shows effective performance on the Titanic dataset. The training and evaluation process is handled in `src/naive_bayes/bayes_main.py`.
+
+- **Naive Bayes**: This model uses [`GaussianNB` scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html), a probabilistic classifier based on applying Bayes' theorem with the assumption of independence between features.
+
+- **PyTorch Binary Classifier**: A [PyTorch Neural Network model](https://pytorch.org/docs/stable/nn.html), designed for binary classification tasks. The network architecture consists of an input layer adapted to the dataset's feature size, a hidden layer with 64 neurons, ReLU activation for introducing non-linearity, dropout for regularization, and a sigmoid output layer for probability prediction. The structure and training process are in `src/pytorch/pytorch_binary.py`.
+
+
 
 ## Model Performance
 The project features three distinct models: RandomForestClassifier, SVM, and a hand-rolled Decision Tree Classifier. Each model has been evaluated for its accuracy:
 - The RandomForestClassifier Accuracy : **0.85**
-- Decision Tree Classifier Accuracy : **0.72**
-- SVM Accuracy : **0.73**
+- Hand-rolled Decision Tree Classifier : **0.72**
+- Hand-rolled RFC : as high as **0.87** !
+- SVM : **0.73**
+- Naive Bayes : **0.68**
+- PyTorch BinaryClassifier Accuracy: **0.81**
 
 
 ## Visual Insights
@@ -79,6 +91,15 @@ poetry run python main.py --model decision_tree
 ```
 ```bash
 poetry run python main.py --model svm
+```
+```bash
+poetry run python main.py --model custom_rfc
+```
+```bash
+poetry run python main.py --model naive_bayes
+```
+```bash
+poetry run python main.py --model pytorch
 ```
 ```bash
 poetry run python main.py # defaults to random_forest

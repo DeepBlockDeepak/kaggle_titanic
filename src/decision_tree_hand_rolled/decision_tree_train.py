@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-from src.decision_tree.decision_tree import build_tree
+from src.decision_tree_hand_rolled.decision_tree import build_tree
 
 
 def custom_accuracy_score(true_labels, predictions):
@@ -62,7 +62,7 @@ def decision_tree_main(X_train, y_train, X_val, y_val):
     predictions = [tree.predict(val_data) for val_data in X_val_list]
     # debug_accuracy_score(y_val_list, predictions)
     print(
-        f"Model: Decision Tree, Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
+        f"Model: Custom Decision Tree, Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
     )
 
     return tree, predictions

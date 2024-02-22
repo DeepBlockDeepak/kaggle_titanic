@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn  # Neural network modules
 import torch.optim as optim  # Optimization algorithms
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler  # For feature scaling
 from torch.utils.data import DataLoader, TensorDataset  # For efficient data handling
 
@@ -112,8 +113,14 @@ def pytorch_main(X_train, y_train, X_val, y_val, return_scaler=True):
         # Convert probabilities to binary predictions based on a threshold of 0.5
         predictions = (predictions_proba.squeeze() > 0.5).int()
 
+    # Convert predictions back to numpy array for use with accuracy_score
+    predictions_numpy = predictions.numpy()
+    accuracy = accuracy_score(y_val, predictions_numpy)
+    model_name = type(model).__name__
+    print(f"Model: {model_name}, Accuracy: {accuracy:.2f}")
+
     # Optionally return the scaler along with the model and predictions
     if return_scaler:
-        return model, predictions.numpy(), scaler
+        return model, predictions_numpy, scaler
     else:
-        return model, predictions.numpy()
+        return model, predictions_numpy
