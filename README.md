@@ -77,6 +77,24 @@ The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle compe
 
 
 
+## Setup and Prerequisites
+To set up the project:
+1. Clone the repository.
+2. Install dependencies specified in `pyproject.toml` using Poetry with:
+```bash
+poetry install
+```
+3. Run 
+```bash
+poetry run python main.py
+``` 
+for training and predictions on the test set or 
+```bash
+poetry run python user_passenger.py
+```
+for custom predictions.
+
+
 ## Scripts and Functionality
 The project is structured to provide a comprehensive approach to the Titanic survival prediction task. Key components and their functionalities are as follows:
 
@@ -109,13 +127,6 @@ poetry run python main.py # defaults to random_forest
 - `rf_hyperparameter_tuning.py`: This script utilizes [GridSearchCV from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to exhaustively search through a predefined grid of hyperparameters and find the combination that yields the best performance. The script processes the training data, splits it for validation, and applies a grid search on the RandomForestClassifier. Interestingly, this script doesn't not produce a more accurate model than that provided with default values inside of [Random Forest Main Script](src/random_forest/rf_main.py)
 
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
-
-
-## Setup and Prerequisites
-To set up the project:
-1. Clone the repository.
-2. Install dependencies specified in `pyproject.toml` using Poetry.
-3. Run `poetry run python main.py` for training and predictions on the test set or `poetry run python user_passenger.py` for custom predictions.
 
 ## Code Formatting and Linting
 
