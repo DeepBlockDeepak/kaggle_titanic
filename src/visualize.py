@@ -75,19 +75,23 @@ def plot_model_accuracies(model_accuracies):
         list(model_accuracies.items()), columns=["Model", "Accuracy"]
     )
 
+    # sorting the accuracies in descending order
+    accuracies_df = accuracies_df.sort_values(
+        by="Accuracy", ascending=False
+    ).reset_index(drop=True)
+
     # Plotting
     plt.figure(figsize=(10, 6))
     ax = accuracies_df.plot(
         kind="bar", x="Model", y="Accuracy", legend=False, color="skyblue"
     )
-    plt.title("Comparison of Model Accuracies")
-    plt.ylabel("Accuracy Score")
-    plt.xlabel("Models")
-    plt.xticks(rotation=0)
+    plt.title("Comparison of Model Accuracies", fontsize=14, fontweight="bold")
+    plt.ylabel("Accuracy Score", fontsize=12, fontweight="bold")
+    plt.xlabel("Models", fontsize=12, fontweight="bold")
+    plt.xticks(rotation=45, fontsize=10)  # Adjust font size as needed
+    plt.yticks(fontsize=10)  # Adjust font size as needed
     plt.ylim(0, 1)  # Assuming accuracy scores are between 0 and 1
     for i in ax.containers:
-        ax.bar_label(
-            i,
-        )
+        ax.bar_label(i)
     plt.tight_layout()
     plt.savefig("outputs/model_accuracies.png")

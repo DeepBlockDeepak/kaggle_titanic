@@ -5,7 +5,7 @@ from src.evaluate_model import evaluate_model
 
 
 def train_rf_model(X_train, y_train):
-    model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)
+    model = RandomForestClassifier(n_estimators=100, max_depth=10)
     model.fit(X_train, y_train)
 
     # model persistence
