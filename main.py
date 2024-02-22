@@ -5,11 +5,11 @@ import torch
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from src.decision_tree.decision_tree_train import decision_tree_main
+from src.decision_tree_hand_rolled.decision_tree_train import decision_tree_main
 from src.naive_bayes.bayes_main import naive_bayes_main
 from src.preprocess import preprocess_data
 from src.pytorch.pytorch_binary import pytorch_main
-from src.random_forest.rf_main import random_forest_main
+from src.random_forest_classifier.rf_main import random_forest_main
 from src.rfc_hand_rolled.random_forest import rfc_handroll_main
 from src.svm.svm_train import svm_main
 from src.visualize import (
@@ -51,7 +51,7 @@ def parse_args():
             "random_forest",
             "svm",
             "decision_tree",
-            "rfc_hand",
+            "custom_rfc",
             "naive_bayes",
             "pytorch",
             "all",
@@ -98,7 +98,7 @@ def main():
         # Call the Decision Tree training and evaluation function
         model, predictions = decision_tree_main(X_train, y_train, X_val, y_val)
         test_predictions = [model.predict(test_data) for test_data in X_test_list]
-    elif args.model == "rfc_hand":
+    elif args.model == "custom_rfc":
         # Convert X_test to list of lists for decision tree compatibility
         X_test_list = X_test.values.tolist()
         # Call the Decision Tree training and evaluation function
@@ -124,7 +124,7 @@ def main():
         X_test_tensor = torch.tensor(X_test_scaled, dtype=torch.float32)
 
         # PyTorch model evaluation
-        model.eval()  # Set the model to evaluation mode
+        model.eval()  # set the model to evaluation mode
         with torch.no_grad():  # Disable gradient computation for inference
             test_predictions_proba = model(X_test_tensor)
             # Apply threshold to convert probabilities to binary class labels
@@ -134,11 +134,12 @@ def main():
     elif args.model == "all":
         # Function Handler
         model_functions = {
-            "Random Forest": random_forest_main,
-            "SVM": svm_main,
-            "Decision Tree": decision_tree_main,
-            "RFC Scratch": rfc_handroll_main,
-            "pytorch": lambda X_train, y_train, X_val, y_val: pytorch_main(
+            "RFC \n sklearn": random_forest_main,
+            "SVM \n sklearn": svm_main,
+            "Naive Bayes \n sklearn": naive_bayes_main,
+            "Hand-Rolled \n DecTree": decision_tree_main,
+            "Hand-Rolled \n RFC ": rfc_handroll_main,
+            "PyTorch \n BinaryClassifier": lambda X_train, y_train, X_val, y_val: pytorch_main(
                 X_train, y_train, X_val, y_val, return_scaler=False
             ),
         }
@@ -148,7 +149,7 @@ def main():
         # Iterate over models to train and evaluate
         for model_name, model_func in model_functions.items():
             accuracy = train_and_score(model_func, X_train, y_train, X_val, y_val)
-            model_accuracies[model_name] = accuracy
+            model_accuracies[model_name] = round(accuracy, 4)
 
         # Call the combined plot function with the accuracy scores
         plot_model_accuracies(model_accuracies)

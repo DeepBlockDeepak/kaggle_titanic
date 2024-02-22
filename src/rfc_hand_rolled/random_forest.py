@@ -3,7 +3,12 @@ from collections import Counter
 
 from sklearn.metrics import accuracy_score
 
-from src.decision_tree.decision_tree import Internal_Node, Leaf, information_gain, split
+from src.decision_tree_hand_rolled.decision_tree import (
+    Internal_Node,
+    Leaf,
+    information_gain,
+    split,
+)
 
 
 class RandomForestClassifier:
@@ -13,7 +18,6 @@ class RandomForestClassifier:
         self.trees = []
 
     def fit(self, dataset, labels):
-        self.trees = []
         for _ in range(self.n_trees):
             # Generate a bootstrap sample
             boot_dataset, boot_labels = bootstrap_sample(dataset, labels)
@@ -103,7 +107,7 @@ def rfc_handroll_main(X_train, y_train, X_val, y_val):
 
     # evaluate and print the accuracy
     print(
-        f"Model: RandomForestClassifier Hand-Rolled, Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
+        f"Model: Custom RandomForestClassifier, Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
     )
 
     return rfc, predictions
