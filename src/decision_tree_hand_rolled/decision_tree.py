@@ -6,9 +6,8 @@ from typing import List, Union
 # It contains the labels of the training data that have reached this point.
 class Leaf:
     def __init__(self, labels, value):
-        self.labels = Counter(
-            labels
-        )  # Counter of labels for the data points that reach this leaf.
+        # Counter of labels for the data points that reach this leaf.
+        self.labels = Counter(labels)
         self.value = value  # Represents the feature value leading to this leaf in the parent node.
 
     # Returns the most common label in this leaf. This is the prediction
@@ -22,13 +21,10 @@ class Leaf:
 # based on the value of a particular feature.
 class Internal_Node:
     def __init__(self, feature, branches, value):
-        self.feature: int = (
-            feature  # The column index of the feature this node splits on.
-        )
-
-        self.branches: List[
-            Union["Leaf", "Internal_Node"]
-        ] = branches  # Child nodes, which can be either further Internal_Nodes or Leafs.
+        # The column index of the feature this node splits on.
+        self.feature: int = feature
+        # Child nodes, which can be either further Internal_Nodes or Leafs.
+        self.branches: List[Union["Leaf", "Internal_Node"]] = branches
         self.value = value  # Represents the feature value that leads to this node in the parent node.
 
     # Determines the branch to follow based on the test data's feature value.
