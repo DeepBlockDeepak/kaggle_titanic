@@ -14,9 +14,7 @@ The model is a [RandomForestClassifier from scikit-learn](https://scikit-learn.o
 
 - **Hand-Rolled RandomForestClassifier**: An extension of the hand-rolled Decision Tree Classifier, this model implements the RandomForest algorithm from scratch. It constructs multiple decision trees on bootstrapped samples of the dataset and uses majority voting for classification. This approach demonstrates the power of ensemble learning in improving prediction accuracy and robustness over individual decision trees. The implementation can be found in `src/rfc_hand_rolled/random_forest.py`. (Accuracy: Reaches as high as **0.87**)
 
-- **Naive Bayes**: Utilizes the probabilistic Naive Bayes algorithm for classification, making the strong assumption that features are independent given the class label. Despite its simplicity, this model shows effective performance on the Titanic dataset. The training and evaluation process is handled in `src/naive_bayes/bayes_main.py`.
-
-- **Naive Bayes**: This model uses [`GaussianNB` scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html), a probabilistic classifier based on applying Bayes' theorem with the assumption of independence between features.
+- **Naive Bayes**: This model uses [`GaussianNB` scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html), a probabilistic classifier based on applying Bayes' theorem with the assumption of independence between features. The training and evaluation process is handled in `src/naive_bayes/bayes_main.py`.
 
 - **PyTorch Binary Classifier**: A [PyTorch Neural Network model](https://pytorch.org/docs/stable/nn.html), designed for binary classification tasks. The network architecture consists of an input layer adapted to the dataset's feature size, a hidden layer with 64 neurons, ReLU activation for introducing non-linearity, dropout for regularization, and a sigmoid output layer for probability prediction. The structure and training process are in `src/pytorch/pytorch_binary.py`.
 
