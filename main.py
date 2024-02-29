@@ -6,8 +6,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 from src.decision_tree_hand_rolled.decision_tree_train import decision_tree_main
+from src.feature_eng_pipeline.data_preprocessing import preprocess_data
 from src.naive_bayes.bayes_main import naive_bayes_main
-from src.preprocess import preprocess_data
 from src.pytorch.pytorch_binary import pytorch_main
 from src.random_forest_classifier.rf_main import random_forest_main
 from src.rfc_hand_rolled.random_forest import rfc_handroll_main
@@ -82,8 +82,9 @@ def main():
         return
 
     # Process data
-    X_train, X_test = preprocess_data(train_data, test_data)
     y_train = train_data["Survived"]
+    train_data = train_data.drop(columns=["Survived"])
+    X_train, X_test = preprocess_data(train_data, test_data)
     X_train, X_val, y_train, y_val = train_test_split(
         X_train, y_train, test_size=0.2, random_state=0
     )
