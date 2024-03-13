@@ -1,7 +1,7 @@
 import joblib
 import pandas as pd
 
-from src.features import apply_feature_engineering
+from kaggle_titanic.features import apply_feature_engineering
 
 
 def collect_user_input():

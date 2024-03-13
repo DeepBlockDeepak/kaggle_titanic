@@ -25,6 +25,16 @@ ruff = "^0.1.13"
 [tool.isort]
 profile = "black"
 
+[tool.poetry.scripts]
+# Formats the code using isort and black
+format = "kaggle_titanic.dev_tools.format_code:run"
+# Lints the code using ruff
+lint = "kaggle_titanic.dev_tools.lint_code:run"
+# Runs unit tests located in the tests/ directory
+test = "kaggle_titanic.dev_tools.run_tests:run"
+# command to run format, lint, and test sequentially
+all-checks = "kaggle_titanic.dev_tools.all_checks:run_all"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

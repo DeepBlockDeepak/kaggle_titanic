@@ -1,6 +1,5 @@
 import joblib
 from sklearn.svm import SVC
-
 from src.evaluate_model import evaluate_model
 
 

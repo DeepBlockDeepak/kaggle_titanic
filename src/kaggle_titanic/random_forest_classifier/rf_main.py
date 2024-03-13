@@ -1,7 +1,7 @@
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 
-from src.evaluate_model import evaluate_model
+from kaggle_titanic.evaluate_model import evaluate_model
 
 
 def train_rf_model(X_train, y_train):
