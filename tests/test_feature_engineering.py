@@ -2,7 +2,7 @@ import unittest
 
 import pandas as pd
 
-from src.features import extract_title
+from kaggle_titanic.features import extract_title
 
 
 class TestFeatureEngineering(unittest.TestCase):

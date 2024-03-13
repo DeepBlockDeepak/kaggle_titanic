@@ -5,14 +5,16 @@ import torch
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from src.decision_tree_hand_rolled.decision_tree_train import decision_tree_main
-from src.naive_bayes.bayes_main import naive_bayes_main
-from src.preprocess import preprocess_data
-from src.pytorch.pytorch_binary import pytorch_main
-from src.random_forest_classifier.rf_main import random_forest_main
-from src.rfc_hand_rolled.random_forest import rfc_handroll_main
-from src.svm.svm_train import svm_main
-from src.visualize import (
+from kaggle_titanic.decision_tree_hand_rolled.decision_tree_train import (
+    decision_tree_main,
+)
+from kaggle_titanic.naive_bayes.bayes_main import naive_bayes_main
+from kaggle_titanic.preprocess import preprocess_data
+from kaggle_titanic.pytorch.pytorch_binary import pytorch_main
+from kaggle_titanic.random_forest_classifier.rf_main import random_forest_main
+from kaggle_titanic.rfc_hand_rolled.random_forest import rfc_handroll_main
+from kaggle_titanic.svm.svm_train import svm_main
+from kaggle_titanic.visualize import (
     plot_confusion_matrix,
     plot_feature_importances,
     plot_model_accuracies,

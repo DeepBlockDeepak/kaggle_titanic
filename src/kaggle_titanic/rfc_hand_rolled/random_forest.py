@@ -3,7 +3,7 @@ from collections import Counter
 
 from sklearn.metrics import accuracy_score
 
-from src.decision_tree_hand_rolled.decision_tree import (
+from kaggle_titanic.decision_tree_hand_rolled.decision_tree import (
     Internal_Node,
     Leaf,
     information_gain,

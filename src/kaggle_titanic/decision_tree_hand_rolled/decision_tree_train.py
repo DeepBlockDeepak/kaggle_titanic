@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-from src.decision_tree_hand_rolled.decision_tree import build_tree
+from kaggle_titanic.decision_tree_hand_rolled.decision_tree import build_tree
 
 
 def custom_accuracy_score(true_labels, predictions):
