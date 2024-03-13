@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.impute import SimpleImputer
 
-from src.features import apply_feature_engineering
+from kaggle_titanic.features import apply_feature_engineering
 
 
 def preprocess_data(train_data, test_data):
