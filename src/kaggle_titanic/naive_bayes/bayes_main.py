@@ -1,6 +1,6 @@
 from sklearn.naive_bayes import GaussianNB
 
-from src.evaluate_model import evaluate_model
+from kaggle_titanic.evaluate_model import evaluate_model
 
 
 def naive_bayes_main(X_train, y_train, X_val, y_val):

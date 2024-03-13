@@ -126,39 +126,44 @@ poetry run python main.py # defaults to random_forest
 
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
 
-## Code Formatting and Linting
+## Code Formatting, Linting, and Testing
 
-### Installing Code Formatters and Linters
-This project uses `isort`, `black`, and `ruff` to maintain code quality and consistency. To install these tools, run the following command:
+### Setup
 
-```bash
-poetry add --dev isort black ruff
-```
+This project uses `isort`, `black`, `ruff`, and Python's built-in `unittest` framework to maintain code quality, consistency, and ensure functionality through automated tests. These tools have been integrated into the project's development environment via Poetry, alongside custom scripts created to streamline their execution.
 
-Before committing your code, please run the following commands to ensure consistency in code style and quality:
+To install these tools along with the project's dependencies, ensure you have Poetry installed, then run:
 
 ```bash
-# Format and lint code
-echo "Running isort for import sorting..."
-poetry run isort .
-
-echo "Running black for code formatting..."
-poetry run black .
-
-echo "Running ruff for linting..."
-poetry run ruff .
+poetry install
 ```
 
+### Running Code Formatters and Linters
 
-## Testing
+Before committing your code, run the following command to automatically format your code and check for linting errors:
 
-### Automated Tests
-`tests/` directory contains automated tests.
-
-To run the tests, navigate to the project root and execute the following command:
-```sh
-python -m unittest discover -s tests
+```bash
+poetry run format
+poetry run lint
 ```
+These commands utilize isort and black for formatting, and ruff for linting, respectively, as configured in the project's pyproject.toml.
+
+### Running Automated Tests
+The tests/ directory contains automated tests for the project. To run these tests, execute the following command from the project root:
+
+```bash
+poetry run test
+```
+This command uses unittest framework to discover and run tests, i.e. `python -m unittest discover -s tests` in the `tests/` directory.
+
+### Running All Checks & Testing
+To format, lint, and run tests sequentially with a single command, you can use:
+
+```bash
+poetry run all-checks
+```
+
+Go-to for testing everything in one go, before pushing changes. Should indicate passing of checks in upstream CI workflow.
 
 
 ## Additional Notes
@@ -166,4 +171,4 @@ This project is an initial implementation of the Titanic survival prediction. Id
 
 ---
 
-*For more detailed information about the scripts and model training, please refer to the source code within the `src/` directory.*
+*For more detailed information about the scripts and model training, please refer to the source code within the `src/kaggle_titanic` package.*
