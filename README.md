@@ -35,7 +35,7 @@ poetry run python user_passenger.py
 ```
 for custom predictions.
 
-
+[See here how this project uses `isort`, `black`, `ruff`, and `unittest` ](./CONTRIBUTING.md) for formatting, linting, and testing.
 
 ## Model Details
 
