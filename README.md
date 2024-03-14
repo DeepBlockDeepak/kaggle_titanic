@@ -1,10 +1,44 @@
 # Titanic Survival Prediction Project
 
+
+## Table of Contents
+- [Overview](#overview)
+- [Setup and Prerequisites](#setup-and-prerequisites)
+- [Model Details](#model-details)
+- [Model Performance](#model-performance)
+- [Visual Insights](#visual-insights)
+- [Data Description](#data-description)
+- [Scripts and Functionality](#scripts-and-functionality)
+- [Contributing](#contributing)
+- [Additional Notes](#additional-notes)
+
+
 ## Overview
 This project is an approach to the [Kaggle Titanic competition](https://www.kaggle.com/c/titanic), aiming to predict the survival of passengers aboard the Titanic using machine learning techniques. The project involves data preprocessing, feature engineering, model training, and predicting survival outcomes. Models range from traditional models like RandomForest and SVM to custom implementations of decision trees and ensemble methods, to deep learning with PyTorch. My larger aim is to provide a comprehensive comparison of these methods by showcasing their functionalities and resulting performances.
 
 
+
+## Setup and Prerequisites
+To set up the project:
+1. Clone the repository.
+2. Install dependencies specified in `pyproject.toml` using Poetry with:
+```bash
+poetry install
+```
+3. Run 
+```bash
+poetry run python main.py
+``` 
+for training and predictions on the test set or 
+```bash
+poetry run python user_passenger.py
+```
+for custom predictions.
+
+
+
 ## Model Details
+
 - **RandomForestClassifier**:
 The model is a [RandomForestClassifier from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html), trained with 100 trees and a maximum depth of 10 (`RandomForestClassifier(n_estimators=100, max_depth=10, random_state=1)`). The model is trained in `src/kaggle_titanic/random_forest/rf_main.py` and persisted to `models/rf_titanic_model.pkl`. (`Accuracy: 0.85`)
 
@@ -67,30 +101,13 @@ The project features three distinct models: RandomForestClassifier, SVM, and a h
 - This histogram shows the spread of the predicted probabilities for survival by the RF model.
 
 
+
 ## Data Description
 The project utilizes the Titanic dataset from Kaggle, obtained via `kaggle competitions download -c titanic`. From Kaggle:
 > - `train.csv` contains the details of a subset of the passengers on board (891 to be exact) and importantly, will reveal whether they survived or not, also known as the "ground truth".
 > - The `test.csv` dataset contains similar information but does not disclose the "ground truth" for each passenger. It's your job to predict these outcomes.
 - `gender_submission.csv`: The expected submission format.
 
-
-
-## Setup and Prerequisites
-To set up the project:
-1. Clone the repository.
-2. Install dependencies specified in `pyproject.toml` using Poetry with:
-```bash
-poetry install
-```
-3. Run 
-```bash
-poetry run python main.py
-``` 
-for training and predictions on the test set or 
-```bash
-poetry run python user_passenger.py
-```
-for custom predictions.
 
 
 ## Scripts and Functionality
@@ -126,44 +143,9 @@ poetry run python main.py # defaults to random_forest
 
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
 
-## Code Formatting, Linting, and Testing
 
-### Setup
-
-This project uses `isort`, `black`, `ruff`, and Python's built-in `unittest` framework to maintain code quality, consistency, and ensure functionality through automated tests. These tools have been integrated into the project's development environment via Poetry, alongside custom scripts created to streamline their execution.
-
-To install these tools along with the project's dependencies, ensure you have Poetry installed, then run:
-
-```bash
-poetry install
-```
-
-### Running Code Formatters and Linters
-
-Before committing your code, run the following command to automatically format your code and check for linting errors:
-
-```bash
-poetry run format
-poetry run lint
-```
-These commands utilize isort and black for formatting, and ruff for linting, respectively, as configured in the project's pyproject.toml.
-
-### Running Automated Tests
-The tests/ directory contains automated tests for the project. To run these tests, execute the following command from the project root:
-
-```bash
-poetry run test
-```
-This command uses unittest framework to discover and run tests, i.e. `python -m unittest discover -s tests` in the `tests/` directory.
-
-### Running All Checks & Testing
-To format, lint, and run tests sequentially with a single command, you can use:
-
-```bash
-poetry run all-checks
-```
-
-Go-to for testing everything in one go, before pushing changes. Should indicate passing of checks in upstream CI workflow.
+## Contributing
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to contribute, set up your environment, run tests, and more.
 
 
 ## Additional Notes
