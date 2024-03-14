@@ -139,7 +139,7 @@ poetry run python main.py # defaults to random_forest
 ```
 
 
-- `rf_hyperparameter_tuning.py`: This script utilizes [GridSearchCV from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to exhaustively search through a predefined grid of hyperparameters and find the combination that yields the best performance. The script processes the training data, splits it for validation, and applies a grid search on the RandomForestClassifier. Interestingly, this script doesn't not produce a more accurate model than that provided with default values inside of [Random Forest Main Script](src/kaggle_titanic/random_forest/rf_main.py)
+- `rf_hyperparameter_tuning.py`: This script utilizes [GridSearchCV from scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to exhaustively search through a predefined grid of hyperparameters and find the combination that yields the best performance. The script processes the training data, splits it for validation, and applies a grid search on the RandomForestClassifier. Interestingly, this script doesn't not produce a more accurate model than that provided with default values inside of [Random Forest Main Script](src/kaggle_titanic/random_forest_classifier/rf_main.py)
 
 - `user_passenger.py`: Takes user input for a single passenger and outputs the survival probability.
 
