@@ -1,6 +1,6 @@
 import joblib
 from sklearn.svm import SVC
-from src.evaluate_model import evaluate_model
+from kaggle_titanic.evaluate_model import evaluate_model
 
 
 def train_svm_model(X_train, y_train):
