@@ -1,5 +1,6 @@
 import joblib
 from sklearn.svm import SVC
+
 from kaggle_titanic.evaluate_model import evaluate_model
 
 
