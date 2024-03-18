@@ -22,10 +22,6 @@ from kaggle_titanic.visualize import (
     plot_survival_probability_histogram,
 )
 
-# Load data
-train_data = pd.read_csv("data/train.csv")
-test_data = pd.read_csv("data/test.csv")
-
 
 def create_submission_file(test_data, test_predictions):
     output = pd.DataFrame(
