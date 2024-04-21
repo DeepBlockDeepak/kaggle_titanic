@@ -22,6 +22,9 @@ from kaggle_titanic.visualize import (
     plot_survival_probability_histogram,
 )
 
+from my_neural_network.neuron import SimpleNeuralNetwork
+from activation_functions.activation_function import ActivationFunction
+
 
 def create_submission_file(test_data, test_predictions):
     output = pd.DataFrame(
