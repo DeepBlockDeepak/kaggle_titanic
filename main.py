@@ -2,6 +2,7 @@ import argparse
 
 import pandas as pd
 import torch
+from activation_functions import ActivationFunction
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
@@ -21,9 +22,6 @@ from kaggle_titanic.visualize import (
     plot_roc_curve,
     plot_survival_probability_histogram,
 )
-
-from my_neural_network.neuron import SimpleNeuralNetwork
-from activation_functions.activation_function import ActivationFunction
 
 
 def create_submission_file(test_data, test_predictions):
