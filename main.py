@@ -2,13 +2,13 @@ import argparse
 
 import pandas as pd
 import torch
-from activation_functions import ActivationFunction
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 from kaggle_titanic.decision_tree_hand_rolled.decision_tree_train import (
     decision_tree_main,
 )
+from kaggle_titanic.my_neural_network import simple_nn_main
 from kaggle_titanic.naive_bayes.bayes_main import naive_bayes_main
 from kaggle_titanic.preprocess import preprocess_data
 from kaggle_titanic.pytorch.pytorch_binary import pytorch_main
@@ -130,6 +130,9 @@ def main():
             test_predictions = (
                 (test_predictions_proba.squeeze() > 0.5).int().numpy().flatten()
             )
+    elif args.model == "simple_nn":
+        model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
+        test_predictions = model.predict(X_test)
     elif args.model == "all":
         # Function Handler
         model_functions = {
