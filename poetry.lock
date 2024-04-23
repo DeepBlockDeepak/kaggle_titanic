@@ -722,8 +722,8 @@ torch = "^2"
 [package.source]
 type = "git"
 url = "https://github.com/DeepBlockDeepak/my-neural-network.git"
-reference = "3-prepare-project-for-export-as-a-reusable-package"
-resolved_reference = "f0f5d7396adc31e31ad6ebeac9ae6e9972d717aa"
+reference = "main"
+resolved_reference = "a40b6886d0185ef78321ff8355611c04d9d7428b"
 
 [[package]]
 name = "mypy-extensions"
@@ -1120,18 +1120,19 @@ xmp = ["defusedxml"]
 
 [[package]]
 name = "platformdirs"
-version = "4.2.0"
-description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+version = "4.2.1"
+description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "platformdirs-4.2.0-py3-none-any.whl", hash = "sha256:0614df2a2f37e1a662acbd8e2b25b92ccf8632929bc6d43467e17fe89c75e068"},
-    {file = "platformdirs-4.2.0.tar.gz", hash = "sha256:ef0cc731df711022c174543cb70a9b5bd22e5a9337c8624ef2c2ceb8ddad8768"},
+    {file = "platformdirs-4.2.1-py3-none-any.whl", hash = "sha256:17d5a1161b3fd67b390023cb2d3b026bbd40abde6fdb052dfbd3a29c3ba22ee1"},
+    {file = "platformdirs-4.2.1.tar.gz", hash = "sha256:031cd18d4ec63ec53e82dceaac0417d218a6863f7745dfcc9efe7793b7039bdf"},
 ]
 
 [package.extras]
 docs = ["furo (>=2023.9.10)", "proselint (>=0.13)", "sphinx (>=7.2.6)", "sphinx-autodoc-typehints (>=1.25.2)"]
 test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.4.3)", "pytest-cov (>=4.1)", "pytest-mock (>=3.12)"]
+type = ["mypy (>=1.8)"]
 
 [[package]]
 name = "pyarrow"
@@ -1601,4 +1602,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "342bad145b240e9d1088a97d6f2a806bdd74640649f4fea809effe4ce04920bf"
+content-hash = "9ee1d331b1e75d88bfa938a237580d01bb9aa6bb7cb98ca7d808d2a14217af7e"
