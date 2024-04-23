@@ -1,7 +1,7 @@
 import argparse
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import torch
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -134,7 +134,7 @@ def main():
             )
     elif args.model == "simple_nn":
         model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
-        X_test = X_test.to_numpy().T # Ensure test data is also prepared correctly
+        X_test = X_test.to_numpy().T  # Ensure test data is also prepared correctly
         X_test = X_test.astype(np.float64)  # Ensure consistent data type for predict()
         test_predictions = model.predict(X_test).flatten()
     elif args.model == "all":
