@@ -136,7 +136,7 @@ def main():
         model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
         X_test = X_test.to_numpy().T # Ensure test data is also prepared correctly
         X_test = X_test.astype(np.float64)  # Ensure consistent data type for predict()
-        test_predictions = model.predict(X_test)
+        test_predictions = model.predict(X_test).flatten()
     elif args.model == "all":
         # Function Handler
         model_functions = {
