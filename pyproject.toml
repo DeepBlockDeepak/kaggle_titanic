@@ -15,7 +15,7 @@ seaborn = "^0.13.1"
 kaggle = "^1.5.16"
 pyarrow = "^15.0.0"
 torch = "^2"
-my_neural_network = { git = "https://github.com/DeepBlockDeepak/my-neural-network.git", tag = "v1.0.0" }
+my_neural_network = { git = "https://github.com/DeepBlockDeepak/my-neural-network.git", branch = "main" }
 
 # Development dependencies for formatting and linting
 [tool.poetry.dev-dependencies]
