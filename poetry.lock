@@ -723,7 +723,7 @@ torch = "^2"
 type = "git"
 url = "https://github.com/DeepBlockDeepak/my-neural-network.git"
 reference = "3-prepare-project-for-export-as-a-reusable-package"
-resolved_reference = "1f892795805d877a25a2e7ee1b7bb3996fa6f2b4"
+resolved_reference = "f0f5d7396adc31e31ad6ebeac9ae6e9972d717aa"
 
 [[package]]
 name = "mypy-extensions"
