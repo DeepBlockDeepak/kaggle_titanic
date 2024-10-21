@@ -31,5 +31,6 @@ class RandomForestModel(BaseModel):
         # model persistence
         joblib.dump(self.model, "models/rf_titanic_model.pkl")
 
+    # super confused on what to call here
     def predict(self, X):
-        self.evaluate()  # calls self.predict(X_val)
+        return self.model.predict(X)
