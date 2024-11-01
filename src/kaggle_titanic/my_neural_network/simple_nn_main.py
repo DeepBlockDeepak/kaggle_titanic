@@ -22,11 +22,11 @@ def simple_nn_main(X_train, y_train, X_val, y_val):
     y_train_np = y_train.to_numpy().reshape(1, -1)  # Reshape to (1, number of samples)
 
     # Initialize the neural network
-    nnConfig = NeuralNetworkConfig(layer_dims=[X_train_np.shape[0], 64, 32, 16, 1])
+    nnConfig = NeuralNetworkConfig(layer_dims=[X_train_np.shape[0],35, 1])
     nn = SimpleNeuralNetwork(nnConfig)
 
     # Train the neural network
-    nn.train(X_train_np, y_train_np, iterations=1000)
+    nn.train(X_train_np, y_train_np, iterations=2)
 
     # Predict on validation set
     AL_val, _ = nn.forward_propagation(X_val_np)
