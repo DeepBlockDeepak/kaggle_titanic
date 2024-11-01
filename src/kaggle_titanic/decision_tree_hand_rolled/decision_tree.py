@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import List, Union
+from typing import Union
 
 
 # A Leaf node represents a final decision point in the decision tree.
@@ -24,7 +24,7 @@ class Internal_Node:
         # The column index of the feature this node splits on.
         self.feature: int = feature
         # Child nodes, which can be either further Internal_Nodes or Leafs.
-        self.branches: List[Union["Leaf", "Internal_Node"]] = branches
+        self.branches: list[Union["Leaf", "Internal_Node"]] = branches
         self.value = value  # Represents the feature value that leads to this node in the parent node.
 
     # Determines the branch to follow based on the test data's feature value.
