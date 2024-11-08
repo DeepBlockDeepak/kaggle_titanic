@@ -4,7 +4,7 @@ from collections import Counter
 from sklearn.metrics import accuracy_score
 
 from kaggle_titanic.decision_tree_hand_rolled.decision_tree import (
-    Internal_Node,
+    InternalNode,
     Leaf,
     information_gain,
     split,
@@ -84,7 +84,7 @@ def build_tree_random_features(data, labels, n_features, value=""):
         )
         branches.append(branch)
 
-    return Internal_Node(best_feature, branches, value)
+    return InternalNode(best_feature, branches, value)
 
 
 def rfc_handroll_main(X_train, y_train, X_val, y_val):

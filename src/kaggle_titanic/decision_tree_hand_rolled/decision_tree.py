@@ -1,46 +1,72 @@
+from abc import ABC, abstractmethod
 from collections import Counter
 from typing import Union
 
 
-# A Leaf node represents a final decision point in the decision tree.
-# It contains the labels of the training data that have reached this point.
-class Leaf:
-    def __init__(self, labels, value):
-        # Counter of labels for the data points that reach this leaf.
-        self.labels = Counter(labels)
-        self.value = value  # Represents the feature value leading to this leaf in the parent node.
+class Node(ABC):
+    def __init__(self, value) -> None:
+        self.value = value  # the feature value leading to this node.
+    
+    @abstractmethod
+    def predict(self, test_datum=None):
+        pass
 
-    # Returns the most common label in this leaf. This is the prediction
-    # for any data point that reaches this leaf.
-    def predict(self, _):
+
+class Leaf(Node):
+    """
+    Represents a final decision point in the decision tree.
+    Contains the labels of the training data that have reached this point.
+    """
+    def __init__(self, labels, value):
+        super().__init__(value)
+        self.labels = Counter(labels)
+
+    def predict(self, test_datum=None) -> int:
+        """
+        Returns the most common label in this leaf.
+        This is the prediction for any data point that reaches this leaf.
+        
+        Args:
+            test_datum: Never used for the Leaf node, only InternalNodes
+
+        Returns:
+            int : The feature index of the most common label.
+        """
         # return max(self.labels, key=self.labels.get)
         return self.labels.most_common(1)[0][0]
 
 
-# An Internal_Node represents a decision point where the dataset is split
-# based on the value of a particular feature.
-class Internal_Node:
+class InternalNode(Node):
+    """
+    Represents a decision point where the dataset is split based on the value of a particular feature.
+    """
     def __init__(self, feature, branches, value):
-        # The column index of the feature this node splits on.
-        self.feature: int = feature
-        # Child nodes, which can be either further Internal_Nodes or Leafs.
-        self.branches: list[Union["Leaf", "Internal_Node"]] = branches
-        self.value = value  # Represents the feature value that leads to this node in the parent node.
+        super().__init__(value)
+        self.feature: int = feature  # The column index of the feature this node splits on.
+        self.branches: list[Union["Leaf", "InternalNode"]] = branches  # Child nodes, which can be either further InternalNodes or Leafs.
 
-    # Determines the branch to follow based on the test data's feature value.
-    # When making a prediction, the node examines the value of its splitting
-    # feature in the input datapoint and selects the corresponding branch.
-    def predict(self, test_datapoint):
-        test_feature_value = test_datapoint[self.feature]
+    def predict(self, test_datum) -> int:
+        """
+        Determines the branch to follow based on the test_datum's feature value.
+        When making a prediction, this node examines the value of its splitting
+        feature in the input datapoint and selects the corresponding branch.
+        
+        Args:
+            test_datum: datum from the testing data
+
+        Returns:
+            int : The feature index of the most common label.
+        """
+        test_feature_value = test_datum[self.feature]  # extract the feature value
         for branch in self.branches:
-            if branch.value == test_feature_value:
-                return branch.predict(test_datapoint)
+            if branch.value == test_feature_value:  # pursue the node in the tree
+                return branch.predict(test_datum)
 
-        # if no matching branch is found
-        # Fallback: Aggregate labels from all reachable leaves and predict the most common label.
+        # when no matching branch is found
+        # aggregate labels from all reachable leaves and predict the most common label.
         all_leaf_labels = []
 
-        def collect_leaf_labels(node: Union["Leaf", "Internal_Node"]):
+        def collect_leaf_labels(node: Union["Leaf", "InternalNode"]):
             if isinstance(node, Leaf):
                 all_leaf_labels.extend(node.labels.elements())
             else:
@@ -48,6 +74,11 @@ class Internal_Node:
                     collect_leaf_labels(branch)
 
         collect_leaf_labels(self)
+        
+        # further error handling needed for if tree-creation is bad
+        if not all_leaf_labels:
+            raise ValueError("No labels found in the subtree.")
+
         return Counter(all_leaf_labels).most_common(1)[0][0]
 
 
@@ -118,13 +149,13 @@ def find_best_split(dataset, labels):
 
 
 def build_tree(data, labels, value=""):
-    # Find the best feature to split on for the current dataset
+    # feature to split on for the current dataset
     best_feature, best_gain = find_best_split(data, labels)
-    # No information gain
+    # no information gain
     if best_gain == 0:
         return Leaf(Counter(labels), value)
 
-    # Split the dataset based on the best feature and recursively build the tree.
+    # split the dataset based on the best feature and recursively build the tree.
     data_subsets, label_subsets = split(data, labels, best_feature)
 
     branches = []
@@ -135,4 +166,4 @@ def build_tree(data, labels, value=""):
         branches.append(branch)
 
     # Return an Internal_Node that splits the data at the best feature.
-    return Internal_Node(best_feature, branches, value)
+    return InternalNode(best_feature, branches, value)
