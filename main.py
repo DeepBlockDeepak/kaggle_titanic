@@ -98,7 +98,7 @@ def main():
         X_test_list = X_test.values.tolist()
         # Call the Decision Tree training and evaluation function
         model, predictions = decision_tree_main(X_train, y_train, X_val, y_val)
-        test_predictions = [model.predict(test_data) for test_data in X_test_list]
+        test_predictions = model.predict(X_test_list)
     elif args.model == "custom_rfc":
         # Convert X_test to list of lists for decision tree compatibility
         X_test_list = X_test.values.tolist()
