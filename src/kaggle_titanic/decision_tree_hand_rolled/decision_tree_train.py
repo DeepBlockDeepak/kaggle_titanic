@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-from kaggle_titanic.decision_tree_hand_rolled.decision_tree import build_tree
+from kaggle_titanic.decision_tree_hand_rolled.decision_tree import DecisionTree
 
 
 def custom_accuracy_score(true_labels, predictions):
@@ -56,10 +56,11 @@ def decision_tree_main(X_train, y_train, X_val, y_val):
     y_val_list = y_val.tolist()
 
     # Build and train decision tree
-    tree = build_tree(X_train_list, y_train_list)
+    tree = DecisionTree()
+    tree.fit(X_train_list, y_train_list)
 
     # Score the Decision Tree with predictions on the validation set
-    predictions = [tree.predict(val_data) for val_data in X_val_list]
+    predictions = tree.predict(X_val_list)
     # debug_accuracy_score(y_val_list, predictions)
     print(
         f"Model: Custom Decision Tree, Accuracy: {accuracy_score(y_val_list, predictions):.2f}"
