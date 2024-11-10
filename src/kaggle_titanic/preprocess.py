@@ -58,4 +58,7 @@ def preprocess_data(train_data, test_data):
     X_train = pd.concat([train_numeric_data, train_categorical_data], axis=1)
     X_test = pd.concat([test_numeric_data, test_categorical_data], axis=1)
 
+    X_train = X_train.to_numpy()
+    X_test = X_test.to_numpy()
+
     return X_train, X_test

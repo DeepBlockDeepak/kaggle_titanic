@@ -71,8 +71,8 @@ class RandomForestClassifier:
 
 def rfc_handroll_main(X_train, y_train, X_val, y_val):
     # Convert DataFrame to list of lists for the decision tree compatibility
-    X_train_list = X_train.values.tolist()
-    X_val_list = X_val.values.tolist()
+    X_train_list = X_train
+    X_val_list = X_val
     y_train_list = y_train.tolist()
     y_val_list = y_val.tolist()
 

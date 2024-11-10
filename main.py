@@ -94,17 +94,13 @@ def main():
         model, predictions = random_forest_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "decision_tree":
-        # Convert X_test to list of lists for decision tree compatibility
-        X_test_list = X_test.values.tolist()
         # Call the Decision Tree training and evaluation function
         model, predictions = decision_tree_main(X_train, y_train, X_val, y_val)
-        test_predictions = model.predict(X_test_list)
+        test_predictions = model.predict(X_test)
     elif args.model == "custom_rfc":
-        # Convert X_test to list of lists for decision tree compatibility
-        X_test_list = X_test.values.tolist()
         # Call the Decision Tree training and evaluation function
         model, predictions = rfc_handroll_main(X_train, y_train, X_val, y_val)
-        test_predictions = model.predict(X_test_list)
+        test_predictions = model.predict(X_test)
     elif args.model == "svm":
         # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
@@ -134,7 +130,7 @@ def main():
             )
     elif args.model == "simple_nn":
         model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
-        X_test = X_test.to_numpy().T  # Ensure test data is also prepared correctly
+        X_test = X_test.T  # transform for input layer to NN
         X_test = X_test.astype(np.float64)  # Ensure consistent data type for predict()
         test_predictions = model.predict(X_test).flatten()
     elif args.model == "all":
