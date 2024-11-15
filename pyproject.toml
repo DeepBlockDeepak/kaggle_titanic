@@ -2,7 +2,7 @@
 name = "kaggle-titanic"
 version = "0.1.0"
 description = ""
-authors = ["DeepBlockDeepak <jordan.medina1729@gmail.commit>"]
+authors = ["DeepBlockDeepak <jordan.medina1729@gmail.com>"]
 readme = "README.md"
 
 # Define your Python version and any project dependencies here
