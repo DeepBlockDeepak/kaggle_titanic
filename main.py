@@ -1,6 +1,5 @@
 import argparse
 
-import numpy as np
 import pandas as pd
 import torch
 from sklearn.metrics import accuracy_score
@@ -82,9 +81,9 @@ def main():
         )
         return
 
-    # Process data
+    # process data -> obtain pd.DataFrames of feature engineered train/test
     X_train, X_test = preprocess_data(train_data, test_data)
-    y_train = train_data["Survived"]
+    y_train: pd.DataFrame = train_data["Survived"]  # extract labels
     X_train, X_val, y_train, y_val = train_test_split(
         X_train, y_train, test_size=0.2, random_state=0
     )
@@ -94,19 +93,29 @@ def main():
         model, predictions = random_forest_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "decision_tree":
-        # Call the Decision Tree training and evaluation function
+        # must use numpy!
+        X_train = X_train.to_numpy()
+        X_val = X_val.to_numpy()
+        y_train = y_train.to_numpy()
+        y_val = y_val.to_numpy()
+        X_test = X_test.to_numpy()
+
         model, predictions = decision_tree_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "custom_rfc":
-        # Call the Decision Tree training and evaluation function
+        # must use numpy!
+        X_train = X_train.to_numpy()
+        X_val = X_val.to_numpy()
+        y_train = y_train.to_numpy()
+        y_val = y_val.to_numpy()
+        X_test = X_test.to_numpy()
+
         model, predictions = rfc_handroll_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "svm":
-        # Call the SVM training and evaluation function
         model, predictions = svm_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "naive_bayes":
-        # Call the Naive Bayes training and evaluation function
         model, predictions = naive_bayes_main(X_train, y_train, X_val, y_val)
         test_predictions = model.predict(X_test)
     elif args.model == "pytorch":
@@ -129,9 +138,16 @@ def main():
                 (test_predictions_proba.squeeze() > 0.5).int().numpy().flatten()
             )
     elif args.model == "simple_nn":
+        # must use numpy!
+        X_train = X_train.to_numpy().T  # features as rows, samples as columns
+        X_test = X_test.to_numpy().T
+        X_val = X_val.to_numpy().T
+
+        y_train = y_train.to_numpy().flatten()  # reshape to (1, number of samples)
+        y_val = y_val.to_numpy().flatten()
+
         model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
-        X_test = X_test.to_numpy().T  # Ensure test data is also prepared correctly
-        X_test = X_test.astype(np.float64)  # Ensure consistent data type for predict()
+        # X_test = X_test.astype(np.float64)  # Ensure consistent data type for predict()
         test_predictions = model.predict(X_test).flatten()
     elif args.model == "all":
         # Function Handler
@@ -139,10 +155,26 @@ def main():
             "RFC \n sklearn": random_forest_main,
             "SVM \n sklearn": svm_main,
             "Naive Bayes \n sklearn": naive_bayes_main,
-            "Hand-Rolled \n DecTree": decision_tree_main,
-            "Hand-Rolled \n RFC ": rfc_handroll_main,
+            "Hand-Rolled \n DecTree": lambda X_train, y_train, X_val, y_val: decision_tree_main(
+                X_train.to_numpy(),
+                y_train.to_numpy(),
+                X_val.to_numpy(),
+                y_val.to_numpy(),
+            ),
+            "Hand-Rolled \n RFC ": lambda X_train, y_train, X_val, y_val: rfc_handroll_main(
+                X_train.to_numpy(),
+                y_train.to_numpy(),
+                X_val.to_numpy(),
+                y_val.to_numpy(),
+            ),
             "PyTorch \n BinaryClassifier": lambda X_train, y_train, X_val, y_val: pytorch_main(
                 X_train, y_train, X_val, y_val, return_scaler=False
+            ),
+            "SimpleNN": lambda X_train, y_train, X_val, y_val: simple_nn_main(
+                X_train.to_numpy().T,
+                y_train.to_numpy().flatten(),
+                X_val.to_numpy().T,
+                y_val.to_numpy().flatten(),
             ),
         }
 

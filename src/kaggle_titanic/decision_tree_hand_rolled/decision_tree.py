@@ -6,7 +6,7 @@ from typing import Union
 class Node(ABC):
     def __init__(self, value) -> None:
         self.value = value  # the feature value leading to this node.
-    
+
     @abstractmethod
     def predict(self, test_datum=None):
         pass
@@ -17,6 +17,7 @@ class Leaf(Node):
     Represents a final decision point in the decision tree.
     Contains the labels of the training data that have reached this point.
     """
+
     def __init__(self, labels, value):
         super().__init__(value)
         self.labels = Counter(labels)
@@ -25,7 +26,7 @@ class Leaf(Node):
         """
         Returns the most common label in this leaf.
         This is the prediction for any data point that reaches this leaf.
-        
+
         Args:
             test_datum: Never used for the Leaf node, only InternalNodes
 
@@ -40,17 +41,22 @@ class InternalNode(Node):
     """
     Represents a decision point where the dataset is split based on the value of a particular feature.
     """
+
     def __init__(self, feature, branches, value):
         super().__init__(value)
-        self.feature: int = feature  # The column index of the feature this node splits on.
-        self.branches: list[Union["Leaf", "InternalNode"]] = branches  # Child nodes, which can be either further InternalNodes or Leafs.
+        self.feature: int = (
+            feature  # The column index of the feature this node splits on.
+        )
+        self.branches: list[
+            Union["Leaf", "InternalNode"]
+        ] = branches  # Child nodes, which can be either further InternalNodes or Leafs.
 
     def predict(self, test_datum) -> int:
         """
         Determines the branch to follow based on the test_datum's feature value.
         When making a prediction, this node examines the value of its splitting
         feature in the input datapoint and selects the corresponding branch.
-        
+
         Args:
             test_datum: datum from the testing data
 
@@ -74,7 +80,7 @@ class InternalNode(Node):
                     collect_leaf_labels(branch)
 
         collect_leaf_labels(self)
-        
+
         # further error handling needed for if tree-creation is bad (no leaves)
         if not all_leaf_labels:
             raise ValueError("No labels found in the subtree.")
@@ -84,7 +90,7 @@ class InternalNode(Node):
 
 class DecisionTree:
     """
-    Enapsualtes the Tree model and prediction methods. 
+    Enapsualtes the Tree model and prediction methods.
     """
 
     def __init__(self) -> None:
@@ -134,7 +140,8 @@ class DecisionTree:
         info_gain = self._gini(starting_labels)
         # calculate weighted impurity of each split
         weighted_impurity = sum(
-            (len(subset) / len(starting_labels)) * self._gini(subset) for subset in split_labels
+            (len(subset) / len(starting_labels)) * self._gini(subset)
+            for subset in split_labels
         )
 
         # information gain is the reduction in impurity after the split

@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 
 from kaggle_titanic.decision_tree_hand_rolled.decision_tree import DecisionTree
 
+
 class RandomDecisionTree(DecisionTree):
     def __init__(self, n_features=None):
         super().__init__()
@@ -15,10 +16,10 @@ class RandomDecisionTree(DecisionTree):
         best_feature, best_gain = -1, 0
         num_features = len(dataset[0])
         dataset_features = list(range(num_features))
-        
+
         # determine the number of features to consider
         if self.n_features is None:
-            n_features_to_consider = int(num_features ** 0.5)
+            n_features_to_consider = int(num_features**0.5)
         else:
             n_features_to_consider = self.n_features
 
@@ -31,7 +32,8 @@ class RandomDecisionTree(DecisionTree):
             if gain > best_gain:
                 best_feature, best_gain = feature, gain
 
-        return best_feature, best_gain    
+        return best_feature, best_gain
+
 
 class RandomForestClassifier:
     def __init__(self, n_trees=10, n_features=None):
@@ -57,7 +59,6 @@ class RandomForestClassifier:
             predictions.append(Counter(votes).most_common(1)[0][0])
         return predictions
 
-
     def _bootstrap_sample(self, dataset, labels):
         n_samples = len(dataset)
         # generate random indices with replacement
@@ -65,7 +66,7 @@ class RandomForestClassifier:
         # create the bootstrap sample
         bootstrap_dataset = [dataset[i] for i in indices]
         bootstrap_labels = [labels[i] for i in indices]
-        
+
         return bootstrap_dataset, bootstrap_labels
 
 

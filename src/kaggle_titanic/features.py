@@ -1,5 +1,5 @@
-# src/features.py
 import pandas as pd
+from sklearn.impute import SimpleImputer
 
 
 def extract_title(data):
@@ -12,6 +12,30 @@ def extract_title(data):
 
     data["Title"] = data["Name"].str.extract(" ([A-Za-z]+)\.", expand=False)
 
+    return data
+
+
+def normalize_titles(data):
+    """
+    Binning common titles and grouping the rare titles under their own category.
+    """
+    title_mapping = {
+        "Mlle": "Miss",
+        "Ms": "Miss",
+        "Mme": "Mrs",
+        "Lady": "Rare",
+        "Countess": "Rare",
+        "Capt": "Rare",
+        "Col": "Rare",
+        "Don": "Rare",
+        "Dr": "Rare",
+        "Major": "Rare",
+        "Rev": "Rare",
+        "Sir": "Rare",
+        "Jonkheer": "Rare",
+        "Dona": "Rare",
+    }
+    data["Title"] = data["Title"].replace(title_mapping)
     return data
 
 
@@ -39,9 +63,17 @@ def create_cabin_indicator(data):
     """
     New binary 'HasCabin' feature. 1 if 'Cabin' data is available (not NaN), else 0.
     """
-
     data["HasCabin"] = data["Cabin"].apply(lambda x: 0 if pd.isna(x) else 1)
 
+    return data
+
+
+def impute_age(data):
+    """
+    Avoiding many missing values in the 'AgeBin', in create_age_bins().
+    """
+    imputer = SimpleImputer(strategy="median")
+    data["Age"] = imputer.fit_transform(data[["Age"]])
     return data
 
 
@@ -61,10 +93,10 @@ def create_fare_bins(data):
     """
     Categorizes 'Fare' into bins and creates a new 'FareBin' column with the category labels.
     """
-
-    bins = [0, 7.91, 14.454, 31, 512]
+    max_fare = data["Fare"].max()
+    bins = [0, 7.91, 14.454, 31, max_fare + 1]
     labels = ["Low", "Below_Average", "Above_Average", "High"]
-    data["FareBin"] = pd.cut(data["Fare"], bins, labels=labels)
+    data["FareBin"] = pd.cut(data["Fare"], bins, labels=labels, include_lowest=True)
 
     return data
 
@@ -81,9 +113,11 @@ def apply_feature_engineering(data):
     """
 
     data = extract_title(data)
+    data = normalize_titles(data)
     data = create_family_size(data)
     data = create_is_alone(data)
     data = create_cabin_indicator(data)
+    data = impute_age(data)
     data = create_age_bins(data)
     data = create_fare_bins(data)
 

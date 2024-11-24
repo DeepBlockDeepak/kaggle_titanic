@@ -106,7 +106,9 @@ def pytorch_main(X_train, y_train, X_val, y_val, return_scaler=True):
     train_model(model, criterion, optimizer, train_loader, val_loader)
 
     # Load the best model and evaluate on validation set
-    model.load_state_dict(torch.load("models/titanic_pytorch_model.pth"))
+    model.load_state_dict(
+        torch.load("models/titanic_pytorch_model.pth", weights_only=True)
+    )
     model.eval()  # Set model to evaluation mode
     with torch.no_grad():  # Disable gradient computation for inference
         predictions_proba = model(X_val_tensor)
