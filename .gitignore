@@ -15,9 +15,6 @@ venv/
 *.venv
 env/
 
-# Poetry
-poetry.lock
-
 # PyCharm
 .idea/
 *.iml

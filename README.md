@@ -6,7 +6,7 @@
 - [Setup and Prerequisites](#setup-and-prerequisites)
 - [Model Details](#model-details)
 - [Model Performance](#model-performance)
-- [Visual Insights](#visual-insights)
+- [Visual Insights](#insights)
 - [Data Description](#data-description)
 - [Scripts and Functionality](#scripts-and-functionality)
 - [Contributing](#contributing)
@@ -55,25 +55,25 @@ The model is a [RandomForestClassifier from scikit-learn](https://scikit-learn.o
 
 
 ## Model Performance
-The project features three distinct models: RandomForestClassifier, SVM, and a hand-rolled Decision Tree Classifier. Each model has been evaluated for its accuracy:
-- The RandomForestClassifier Accuracy : **0.85**
-- Hand-rolled Decision Tree Classifier : **0.72**
+The project features multiple models: 4 sklearn built-ins and 3 of my own custom-made models. The custom models are the hand-rolled Decision Tree and Random Forest Classifiers, as well as a custom feed forward neural network, imported as a module [from here](https://github.com/DeepBlockDeepak/my-neural-network).
+
+Of Note:
 - Hand-rolled RFC : as high as **0.87** !
-- SVM : **0.73**
-- Naive Bayes : **0.68**
-- PyTorch BinaryClassifier Accuracy: **0.81**
+- Simple Neural Network (hand-rolled model): **0.85** !
+- Hand-rolled Decision Tree : as high as **0.75**
 
 
-## Visual Insights
+
+## Insights
 
 ![Model Accuracy Comparison](outputs/model_accuracies.png)
 
-***Model Accuracy Comparison:*** A comparative view of the accuracy scores achieved by each model.
+***Model Accuracy Comparison:*** A comparison of the accuracy scores for each model.
 
 
 
 ![Feature Importances](outputs/randomforestclassifier_feature_importances.png)
-***Feature Importances:*** This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/kaggle_titanic/features.py**'s `extract_title()`.
+***Feature Importances:*** This bar chart ranks the features by their importance in the RandomForestClassifier model. The length of the bar represents the feature's weight in the model, with `Title_Mr`, `Fare`, and `Age` being among the most influential for predicting survival on the Titanic. Notably, `Title_Mr` emerges as a significant predictor — a result of extracting titles from passenger names and applying one-hot encoding during the preprocessing phase, as defined in **src/kaggle_titanic/features.py**'s `extract_title()`. Similarly, `Fare`, is the strongest predictor - resulting from binning the raw data.
 
 
 ![Confusion Matrix](outputs/randomforestclassifier_confusion_matrix.png)
@@ -116,6 +116,16 @@ The project is structured to provide a comprehensive approach to the Titanic sur
 - `main.py`: Central entry point. It handles data loading, preprocessing, model training, evaluation, and prediction generation. The script is versatile, allowing users to select between RandomForestClassifier, SVM, Decision Tree, or to compare all models by using the `--model` argument. Outputs a `./submission.csv` file for the test set predictions for the Kaggle submission.
 
 **Example Usage:**
+
+To run `all models`:
+```bash
+poetry run python main.py --model all
+```
+
+To run `individual` models:
+```bash
+poetry run python main.py --model simple_nn
+```
 ```bash
 poetry run python main.py --model random_forest
 ```
