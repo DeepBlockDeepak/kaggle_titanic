@@ -7,7 +7,7 @@ def simple_nn_main(X_train, y_train, X_val, y_val):
 
     # init the neural network
     nnConfig = NeuralNetworkConfig(
-        layer_dims=[X_train.shape[0], 40, 1], optimizer="adam"
+        layer_dims=[X_train.shape[0], 64, 32, 1], optimizer="adam"
     )
     nn = SimpleNeuralNetwork(nnConfig)
 

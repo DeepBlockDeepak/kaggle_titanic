@@ -143,7 +143,9 @@ def main():
         X_test = X_test.to_numpy().T
         X_val = X_val.to_numpy().T
 
-        y_train = y_train.to_numpy().flatten()  # reshape to (1, number of samples)
+        y_train = (
+            y_train.to_numpy().flatten().reshape(-1, 1).T
+        )  # reshape to (1, number of samples)
         y_val = y_val.to_numpy().flatten()
 
         model, predictions = simple_nn_main(X_train, y_train, X_val, y_val)
@@ -172,7 +174,7 @@ def main():
             ),
             "SimpleNN": lambda X_train, y_train, X_val, y_val: simple_nn_main(
                 X_train.to_numpy().T,
-                y_train.to_numpy().flatten(),
+                y_train.to_numpy().flatten().reshape(-1, 1).T,
                 X_val.to_numpy().T,
                 y_val.to_numpy().flatten(),
             ),
